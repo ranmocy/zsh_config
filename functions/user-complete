@@ -1,0 +1,20 @@
+case $BUFFER in
+    "" )                       # 空行填入 "cd "
+            BUFFER="cd "
+            zle end-of-line
+            zle expand-or-complete
+            ;;
+    "cd --" )                  # "cd --" 替换为 "cd +"
+            BUFFER="cd +"
+            zle end-of-line
+            zle expand-or-complete
+            ;;
+    "cd +-" )                  # "cd +-" 替换为 "cd -"
+            BUFFER="cd -"
+            zle end-of-line
+            zle expand-or-complete
+            ;;
+    * )
+            zle expand-or-complete
+            ;;
+esac

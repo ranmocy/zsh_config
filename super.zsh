@@ -1,3 +1,5 @@
+export PATH=/usr/local/bin:$PATH:/usr/local/Cellar/ruby/1.9.3-p0/bin:/usr/local/Cellar/git/1.7.9/bin
+
 # Prompt
 export LC_TIME=POSIX
 source ~/.zshrc.d/functions/update-current-git-info.zsh
@@ -6,6 +8,11 @@ source ~/.zshrc.d/jonathan.zsh
 
 # RVM init
 [[ -s "/Users/ranmocy/.rvm/scripts/rvm" ]] && source "/Users/ranmocy/.rvm/scripts/rvm"
+export RUBY_HEAP_MIN_SLOTS=1000000
+export RUBY_HEAP_SLOTS_INCREMENT=1000000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=1000000000
+export RUBY_HEAP_FREE_MIN=500000
 
 # Alias
 unalias gs

@@ -12,9 +12,8 @@ alias ec='/usr/local/Cellar/emacs/HEAD/bin/emacsclient -t'
 alias g='git'
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
-# hash -d E="/etc/"
-# hash -d DC="/Users/ranmocy/Documents"
-# hash -d DL="/Users/ranmocy/Downloads"
+hash -d gitcafe='/Users/ranmocy/codes/gitcafe/'
+hash -d memo='/Users/ranmocy/Documents/Memories/'
 
 # zsh alias
 alias history_top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'

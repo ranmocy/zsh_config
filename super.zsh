@@ -6,6 +6,18 @@ source ~/.zshrc.d/functions/update-current-git-info.zsh
 source ~/.zshrc.d/functions/current-git-branch-status.zsh
 source ~/.zshrc.d/jonathan.zsh
 
+# History
+export HISTSIZE=10000 #历史纪录条目数量
+export SAVEHIST=10000 #注销后保存的历史纪录条目数量
+#export HISTFILE=~/.zhistory #历史纪录文件
+setopt INC_APPEND_HISTORY #以附加的方式写入历史纪录
+setopt HIST_IGNORE_DUPS #如果连续输入的命令相同，历史纪录中只保留一个
+setopt EXTENDED_HISTORY #为历史纪录中的命令添加时间戳
+setopt AUTO_PUSHD #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
+setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
+setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
+
+
 # RVM init
 [[ -s "/Users/ranmocy/.rvm/scripts/rvm" ]] && source "/Users/ranmocy/.rvm/scripts/rvm"
 export RUBY_HEAP_MIN_SLOTS=1000000
@@ -19,6 +31,8 @@ unalias gs
 unalias ls
 source ~/.zshrc.d/alias.zsh
 
+# As a word
+WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 
 
 # Calculator
@@ -34,7 +48,7 @@ zmodload zsh/mathfunc
 autoload -U zsh-mime-setup
 zsh-mime-setup
 
-#[Esc][h] man 当前命令时，显示简短说明
+#[Esc][h] short man
 alias run-help >&/dev/null && unalias run-help
 autoload run-help
 
@@ -60,3 +74,5 @@ user-complete() {
             ;;
     esac
 }
+zle -N user-complete
+bindkey "\t" user-complete

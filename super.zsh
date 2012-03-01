@@ -1,6 +1,7 @@
 # Path
 export PATH=$PATH:/usr/local/Cellar/ruby/1.9.3-p0/bin
 export PATH=$PATH:/usr/local/Cellar/git/1.7.9.1/libexec/git-core
+export PATH=$PATH:/usr/local/Cellar/emacs/HEAD/bin
 
 # History
 export HISTSIZE=10000 #历史纪录条目数量

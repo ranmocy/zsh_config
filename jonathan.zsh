@@ -11,6 +11,7 @@ function precmd {
     
     local promptsize=${#${(%):--()--(%n@%m:%l)--}}
     local rubyprompt=`rvm_prompt_info`
+    #local rubyprompt=`rvm current`
     local rubypromptsize=${#${rubyprompt}}
     local pwdsize=${#${(%):-%~}}
     
@@ -105,7 +106,7 @@ setprompt () {
     PROMPT='$PR_SET_CHARSET\
 $UL_corner\
 $PR_YELLOW%$PR_PWDLEN<...<%~%<<$PR_BLUE)\
-$PR_GREY`rvm_prompt_info` \
+$PR_LIGHT_YELLOW`rvm_prompt_info` \
 $PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT(\
 $PR_LIGHT_BLUE%(!.%SROOT%s.%n)$PR_GREY@$PR_GREEN%m:%l\
 $UR_corner\

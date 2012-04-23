@@ -9,6 +9,7 @@ alias ll="ls -al"
 # alias rm='rm -i'
 alias grep='grep --colour=auto'
 alias g='git'
+alias t='tmuxinator'
 #alias e="/usr/local/Cellar/emacs/HEAD/bin/emacs -nw"
 #alias ec="/usr/local/Cellar/emacs/HEAD/bin/emacsclient -t -a '/usr/local/Cellar/emacs/HEAD/bin/emacs --daemon && /usr/local/Cellar/emacs/HEAD/bin/emacsclient -t'"
 #alias emacs="/usr/local/Cellar/emacs/HEAD/bin/emacs"

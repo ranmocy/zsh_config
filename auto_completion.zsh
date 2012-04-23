@@ -43,9 +43,9 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 
 # 错误校正
-zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
+# zstyle ':completion:*' completer _complete _match _approximate
+# zstyle ':completion:*:match:*' original only
+# zstyle ':completion:*:approximate:*' max-errors 1 numeric
  
 # kill 命令补全
 compdef pkill=kill

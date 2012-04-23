@@ -3,7 +3,9 @@
 # export PATH=$PATH:/usr/local/Cellar/git/1.7.9.1/libexec/git-core
 # export PATH=$PATH:/usr/local/Cellar/emacs/HEAD/bin
 for d in /usr/bin/*; do
-    PATH+=":$d"
+    if [ -d $d ]; then
+        PATH+=":$d"
+    fi
 done
 
 # History
@@ -16,6 +18,11 @@ setopt EXTENDED_HISTORY #为历史纪录中的命令添加时间戳
 setopt AUTO_PUSHD #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
 setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
 setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
+
+# Tmuxinator
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+export EDITOR="emacsclient -t -a ''"
+export SHELL="/bin/zsh"
 
 # RVM init
 [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm

@@ -1,6 +1,6 @@
 # System Alias
-#alias ls="ls -G -F" #macos
-alias ls="ls --color=auto" #linux
+alias ls="ls -G -F" #macos
+#alias ls="ls --color=auto" #linux
 alias l="ls -l"
 alias la="ls -a"
 alias ll="ls -al"
@@ -10,9 +10,10 @@ alias ll="ls -al"
 alias grep='grep --colour=auto'
 alias g='git'
 alias t='tmuxinator'
-#alias e="/usr/local/Cellar/emacs/HEAD/bin/emacs -nw"
-#alias ec="/usr/local/Cellar/emacs/HEAD/bin/emacsclient -t -a '/usr/local/Cellar/emacs/HEAD/bin/emacs --daemon && /usr/local/Cellar/emacs/HEAD/bin/emacsclient -t'"
-#alias emacs="/usr/local/Cellar/emacs/HEAD/bin/emacs"
+alias emacs="/usr/local/Cellar/emacs/24.1/bin/emacs -nw"
+alias emacsclient="/usr/local/Cellar/emacs/24.1/bin/emacsclient -t"
+alias e="emacs"
+alias ec="emacsclient -a ''"
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d gitcafe='/Users/ranmocy/codes/gitcafe/'

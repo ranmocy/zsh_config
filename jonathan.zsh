@@ -114,7 +114,7 @@ $UR_corner\
 $LL_corner\
 `current-git-branch-status`\
 $PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-(￣▽￣)~*\
+(￣▽￣)~*>\
 $PR_NO_COLOUR'
 
     # display exitcode on the right when >0

@@ -84,3 +84,23 @@ arith-eval-echo() {
 }
 zle -N arith-eval-echo
 bindkey "\e\e" arith-eval-echo
+
+# CPU MEM info
+cpu() {
+    local num=10;
+    if [ ! -z $1 ]; then num=$1; fi
+    ans=`ps -eo pcpu,pid,args | sort -r | head -$num | sed '/%CPU/d' | sed 's/\/Applications\///g' | sed 's/\/Utilities\///g' | sed 's/\/Contents.*//g' | sed 's/\/System\/Library\/Frameworks\///g'| sed 's/\.framework.*/\.framework/g'| sed 's/\/System\/Library\/PrivateFrameworks\///g'`
+    echo $ans
+}
+mem() {
+    local num=10;
+    if [ ! -z $1 ]; then num=$1; fi
+    ans=`ps -eo pmem,pid,args | sort -r | head -$num | sed '/%MEM/d' | sed 's/\/Applications\///g' | sed 's/\/Utilities\///g' | sed 's/\/Contents.*//g' | sed 's/\/System\/Library\/Frameworks\///g'| sed 's/\.framework.*/\.framework/g'| sed 's/\/System\/Library\/PrivateFrameworks\///g'`
+    echo $ans
+}
+
+# Pretty UI
+mountt() {
+    ans=`(echo "DEVICE PATH TYPE FLAGS" && mount )| sed 's/map /map::/g' | sed 's/on//g' | column -t`
+    echo $ans
+}

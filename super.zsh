@@ -38,8 +38,6 @@ export RUBY_HEAP_FREE_MIN=500000
 source ~/.zshrc.d/functions.zsh
 
 # Alias
-unalias gs
-unalias ls
 source ~/.zshrc.d/alias.zsh
 
 # Prompt

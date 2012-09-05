@@ -1,6 +1,6 @@
 # Normal Prompt
 #RPROMPT='%/'
-#PROMPT='%{[36m%}%n%{[35m%}@%{[34m%}%M %{[33m%}%D %T  %{[32m%}%/ 
+#PROMPT='%{[36m%}%n%{[35m%}@%{[34m%}%M %{[33m%}%D %T  %{[32m%}%/
 #%{[31m%}>>%{[m%}'
 
 # Status Prompt
@@ -11,16 +11,16 @@ function precmd {
     # Truncate the path if it's too long.
     PR_FILLBAR=""
     PR_PWDLEN=""
-    
+
     local promptsize=${#${(%):--(%n@%m:%l)()---}}
     local pwdsize=${#${(%):-%~}}
-    
+
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
         ((PR_PWDLEN=$TERMWIDTH - $promptsize))
     else
         PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
     fi
-    
+
     # Get APM info.
     #if which ibam > /dev/null; then
         #PR_APM_RESULT=`ibam --percentbattery`
@@ -44,7 +44,7 @@ preexec () {
 setprompt () {
     # Need this so the prompt will work.
     setopt prompt_subst
-    
+
     # See if we can use colors.
     autoload colors zsh/terminfo
     if [[ "$terminfo[colors]" -ge 8 ]]; then
@@ -56,7 +56,7 @@ setprompt () {
         (( count = $count + 1 ))
     done
     PR_NO_COLOUR="%{$terminfo[sgr0]%}"
-    
+
     # See if we can use extended characters to look nicer.
     typeset -A altchar
     set -A altchar ${(s..)terminfo[acsc]}
@@ -69,7 +69,7 @@ setprompt () {
     PR_LLCORNER=${altchar[m]:--}
     PR_LRCORNER=${altchar[j]:--}
     PR_URCORNER=${altchar[k]:--}
-    
+
     # Decide if we need to set titlebar text.
     case $TERM in
         xterm*)
@@ -82,14 +82,14 @@ setprompt () {
             PR_TITLEBAR=''
             ;;
     esac
-    
+
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
         PR_STITLE=$'%{\ekzsh\e\\%}'
     else
         PR_STITLE=''
     fi
-    
+
     # APM detection
     #if which ibam > /dev/null; then
         #PR_APM='$PR_RED${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
@@ -98,7 +98,7 @@ setprompt () {
     #else
         PR_APM=''
     #fi
-    
+
     # Finally, the prompt.
     PROMPT='\
 $PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\

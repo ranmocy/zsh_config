@@ -1,12 +1,13 @@
 # Path
+export PATH=~/Codespace/bin:$PATH
 # export PATH=$PATH:/usr/local/Cellar/ruby/1.9.3-p0/bin
 # export PATH=$PATH:/usr/local/Cellar/git/1.7.9.1/libexec/git-core
 # export PATH=$PATH:/usr/local/Cellar/emacs/HEAD/bin
-for d in /usr/bin/*; do
-    if [ -d $d ]; then
-        PATH+=":$d"
-    fi
-done
+# for d in /usr/bin/*; do
+#     if [ -d $d ]; then
+#         PATH+=":$d"
+#     fi
+# done
 
 # History
 export HISTSIZE=10000 #历史纪录条目数量
@@ -21,7 +22,7 @@ setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪
 
 # Tmuxinator
 [[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-export EDITOR="emacsclient -t -a ''"
+export EDITOR="emacsclient -c -a 'vim'"
 export SHELL="/bin/zsh"
 
 # RVM init
@@ -48,7 +49,7 @@ source ~/.zshrc.d/jonathan.zsh
 # As a word
 WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 
-# Extend Math 
+# Extend Math
 zmodload zsh/mathfunc
 autoload -U zsh-mime-setup
 zsh-mime-setup

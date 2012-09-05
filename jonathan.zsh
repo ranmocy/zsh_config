@@ -5,16 +5,16 @@ function precmd {
 
     ###
     # Truncate the path if it's too long.
-    
+
     PR_FILLBAR=""
     PR_PWDLEN=""
-    
+
     local promptsize=${#${(%):--()--(%n@%m:%l)--}}
     local rubyprompt=`rvm_prompt_info`
     #local rubyprompt=`rvm current`
     local rubypromptsize=${#${rubyprompt}}
     local pwdsize=${#${(%):-%~}}
-    
+
     if [[ "$promptsize + $rubypromptsize + $pwdsize" -gt $TERMWIDTH ]]; then
         ((PR_PWDLEN=$TERMWIDTH - $promptsize))
     else
@@ -56,7 +56,7 @@ setprompt () {
 
     ###
     # See if we can use extended characters to look nicer.
-    
+
     typeset -A altchar
     set -A altchar ${(s..)terminfo[acsc]}
     PR_SET_CHARSET="%{$terminfo[enacs]%}"
@@ -68,10 +68,10 @@ setprompt () {
     PR_LRCORNER=${altchar[j]:--}
     PR_URCORNER=${altchar[k]:--}
 
-    
+
     ###
     # Decide if we need to set titlebar text.
-    
+
     case $TERM in
 	      xterm*)
 	          PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
@@ -83,8 +83,8 @@ setprompt () {
 	          PR_TITLEBAR=''
 	          ;;
     esac
-    
-    
+
+
     ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
@@ -92,8 +92,8 @@ setprompt () {
     else
 	      PR_STITLE=''
     fi
-    
-    
+
+
     ###
     # Finally, the prompt.
 #$PR_STITLE${(e)PR_TITLEBAR}\

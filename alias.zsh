@@ -1,3 +1,5 @@
+# -*- mode: conf; -*-
+
 # System Alias
 alias ls="ls -G -F" #macos
 #alias ls="ls --color=auto" #linux
@@ -10,14 +12,15 @@ alias ll="ls -al"
 alias grep='grep --colour=auto'
 alias g='git'
 alias t='tmuxinator'
-alias emacs="/usr/local/Cellar/emacs/24.1/bin/emacs -nw"
-alias emacsclient="/usr/local/Cellar/emacs/24.1/bin/emacsclient -t"
-alias e="emacs"
-alias ec="emacsclient -a ''"
+# alias emacs="/usr/local/Cellar/emacs/24.1/bin/emacs"
+# alias emacsclient="/usr/local/Cellar/emacs/24.1/bin/emacsclient"
+alias e="emacs -nw"
+alias et="emacsclient -t -a ''"
+alias ec="emacsclient -c -a ''"
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
-hash -d gitcafe='/Users/ranmocy/codes/gitcafe/'
-hash -d memo='/Users/ranmocy/Documents/Memories/'
+hash -d code='/Users/ranmocy/Codespace/'
+hash -d brain='/Users/ranmocy/Documents/Brain/'
 
 # zsh alias
 alias history_top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'

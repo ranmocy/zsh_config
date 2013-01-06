@@ -1,28 +1,45 @@
 function precmd {
-    local TERMWIDTH
-    (( TERMWIDTH = ${COLUMNS} - 1 ))
 
-
-    ###
-    # Truncate the path if it's too long.
-
+    # PROMPTS
+    PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
-    PR_PWDLEN=""
+    PR_PWD="%~"
+    PR_RVM=`rvm_prompt_info`
+    PR_USER="%(!.%SROOT%s.%n)"
+    PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
+    PR_GIT_STATUS="%10>...>`current-git-branch-status`%<<"
+    PR_TIME="%D{%H:%M:%S %A,%m-%d}"
 
-    local promptsize=${#${(%):--()--(%n@%m:%l)--}}
-    local rubyprompt=`rvm_prompt_info`
-    #local rubyprompt=`rvm current`
-    local rubypromptsize=${#${rubyprompt}}
-    local pwdsize=${#${(%):-%~}}
+    # Calc sizes
+    local TERMWIDTH=$(($COLUMNS-1))
+    local templatesize=${#${(%):-${PR_TEMPLATE}}}
+    local pwdsize=${#${(%):-${PR_PWD}}}
+    local rvmsize=${#${(%):-${PR_RVM}}}
+    local usersize=${#${(%):-${PR_USER}}}
+    local hostsize=${#${(%):-"@%m:%l"}}
 
-    if [[ "$promptsize + $rubypromptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-        ((PR_PWDLEN=$TERMWIDTH - $promptsize))
+
+    # Full info => remove host => remove user => shrink pwd
+    if [[ "$templatesize + $pwdsize + $rvmsize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
+        # Full info
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize + $hostsize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rvmsize + $usersize" -lt $TERMWIDTH ]]; then
+        # Remove @host
+        PR_HOST=""
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rvmsize" -lt $TERMWIDTH ]]; then
+        # remove user
+        PR_HOST=""
+        PR_USER=""
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize)))..${PR_HBAR}.)}"
     else
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $rubypromptsize + $pwdsize)))..${PR_HBAR}.)}"
+        # shrink pwd
+        PR_HOST=""
+        PR_USER=""
+        PR_PWD="%$(($TERMWIDTH - $templatesize - $rvmsize))<...<%~%<<"
     fi
 
 }
-
 
 setopt extended_glob
 preexec () {
@@ -98,30 +115,30 @@ setprompt () {
     # Finally, the prompt.
 #$PR_STITLE${(e)PR_TITLEBAR}\
 
-    UL_corner="$PR_BLUE$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT("
-    LL_corner="$PR_BLUE$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT("
-    UR_corner="$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT"
-    LR_corner="$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
+    UL_corner="$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT"
+    LL_corner="$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT"
+    UR_corner="$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT"
+    LR_corner="$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
 
     PROMPT='$PR_SET_CHARSET\
-$UL_corner\
-$PR_YELLOW%$PR_PWDLEN<...<%~%<<$PR_BLUE)\
-$PR_LIGHT_YELLOW`rvm_prompt_info` \
-$PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT(\
-$PR_LIGHT_BLUE%(!.%SROOT%s.%n)$PR_GREY@$PR_GREEN%m:%l\
+$PR_BLUE$UL_corner\
+($PR_YELLOW$PR_PWD$PR_BLUE)\
+$PR_LIGHT_YELLOW`rvm_prompt_info`\
+$PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT\
+($PR_LIGHT_BLUE$PR_USER$PR_HOST$PR_BLUE)\
 $UR_corner\
 
 $LL_corner\
-%$PR_PWDLEN>...>`current-git-branch-status`%<<\
-$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
+($PR_GIT_STATUS$PR_BLUE)\
+$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 (￣▽￣)~*>\
 $PR_NO_COLOUR'
 
     # display exitcode on the right when >0
-    return_code="%(?..%{$fg[red]%}%?↵%{$reset_color%})"
+    return_code="%(?..%{$fg[red]%}%?%{$reset_color%})"
     RPROMPT='\
-$PR_SHIFT_IN$PR_BLUE$PR_HBAR$return_code$PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-($PR_YELLOW%D{%H:%M:%S %A,%m-%d}\
+$PR_SHIFT_IN$return_code$PR_SHIFT_OUT\
+$PR_BLUE($PR_YELLOW$PR_TIME$PR_BLUE)\
 $LR_corner\
 $PR_NO_COLOUR'
 

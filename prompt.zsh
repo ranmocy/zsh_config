@@ -7,7 +7,9 @@ function precmd {
     PR_RVM=`rvm_prompt_info`
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
-    PR_GIT_STATUS="%10>...>`current-git-branch-status`%<<"
+
+    PR_GIT=`current-git-branch-status`
+    PR_MOE="(￣▽￣)~*"
     PR_TIME="%D{%H:%M:%S %A,%m-%d}"
 
     # Calc sizes
@@ -18,6 +20,9 @@ function precmd {
     local usersize=${#${(%):-${PR_USER}}}
     local hostsize=${#${(%):-"@%m:%l"}}
 
+    local gitsize=${#${(%):-${PR_GIT}}}
+    local moesize=${#${(%):-${PR_MOE}}}
+    local timesize=${#${(%):-${PR_TIME}}}
 
     # Full info => remove host => remove user => shrink pwd
     if [[ "$templatesize + $pwdsize + $rvmsize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
@@ -39,13 +44,23 @@ function precmd {
         PR_PWD="%$(($TERMWIDTH - $templatesize - $rvmsize))<...<%~%<<"
     fi
 
+    local gitmin=10
+    local TERMWIDTH3=$(($TERMWIDTH / 3))
+
+    if [[ "$gitsize + $moesize" -lt $TERMWIDTH3 ]]; then
+    elif [[ "$gitmin + $moesize" -lt $TERMWIDTH3 ]]; then
+        PR_GIT="%$(($TERMWIDTH3 - $moesize))>...>$PR_GIT%<<"
+    elif [[ "$gitmin" -lt $TERMWIDTH3 ]]; then
+        PR_MOE=""
+        PR_GIT="%$(($TERMWIDTH3))>...>$PR_GIT%<<"
+    fi
 }
 
 setopt extended_glob
 preexec () {
     if [[ "$TERM" == "screen" ]]; then
-	      local CMD=${1[(wr)^(*=*|sudo|-*)]}
-	      echo -n "\ek$CMD\e\\"
+          local CMD=${1[(wr)^(*=*|sudo|-*)]}
+          echo -n "\ek$CMD\e\\"
     fi
 }
 
@@ -62,12 +77,12 @@ setprompt () {
 
     autoload colors zsh/terminfo
     if [[ "$terminfo[colors]" -ge 8 ]]; then
-	      colors
+          colors
     fi
     for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
-	      eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-	      eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
-	      (( count = $count + 1 ))
+          eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+          eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
+          (( count = $count + 1 ))
     done
     PR_NO_COLOUR="%{$terminfo[sgr0]%}"
 
@@ -90,24 +105,24 @@ setprompt () {
     # Decide if we need to set titlebar text.
 
     case $TERM in
-	      xterm*)
-	          PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
-	          ;;
-	      screen)
-	          PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
-	          ;;
-	      *)
-	          PR_TITLEBAR=''
-	          ;;
+          xterm*)
+              PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+              ;;
+          screen)
+              PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
+              ;;
+          *)
+              PR_TITLEBAR=''
+              ;;
     esac
 
 
     ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
-	      PR_STITLE=$'%{\ekzsh\e\\%}'
+          PR_STITLE=$'%{\ekzsh\e\\%}'
     else
-	      PR_STITLE=''
+          PR_STITLE=''
     fi
 
 
@@ -129,9 +144,9 @@ $PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT\
 $UR_corner\
 
 $LL_corner\
-($PR_GIT_STATUS$PR_BLUE)\
+($PR_GIT$PR_BLUE)\
 $PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-(￣▽￣)~*>\
+$PR_MOE>\
 $PR_NO_COLOUR'
 
     # display exitcode on the right when >0

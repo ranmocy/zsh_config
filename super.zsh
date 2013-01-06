@@ -40,7 +40,10 @@ source ~/.zshrc.d/alias.zsh
 
 # Prompt
 export LC_TIME=POSIX
-source ~/.zshrc.d/jonathan.zsh
+source ~/.zshrc.d/prompt.zsh
+
+# Auto completion
+source ~/.zshrc.d/auto_completion.zsh
 
 #==========SETUPS==========#
 # As a word

@@ -1,131 +1,151 @@
-# Normal Prompt
-#RPROMPT='%/'
-#PROMPT='%{[36m%}%n%{[35m%}@%{[34m%}%M %{[33m%}%D %T  %{[32m%}%/
-#%{[31m%}>>%{[m%}'
-
-# Status Prompt
 function precmd {
-    local TERMWIDTH
-    (( TERMWIDTH = ${COLUMNS} - 1 ))
 
-    # Truncate the path if it's too long.
+    # PROMPTS
+    PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
-    PR_PWDLEN=""
+    PR_PWD="%~"
+    PR_RVM=`rvm_prompt_info`
+    PR_USER="%(!.%SROOT%s.%n)"
+    PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
+    PR_GIT_STATUS="%10>...>`current-git-branch-status`%<<"
+    PR_TIME="%D{%H:%M:%S %A,%m-%d}"
 
-    local promptsize=${#${(%):--(%n@%m:%l)()---}}
-    local pwdsize=${#${(%):-%~}}
+    # Calc sizes
+    local TERMWIDTH=$(($COLUMNS-1))
+    local templatesize=${#${(%):-${PR_TEMPLATE}}}
+    local pwdsize=${#${(%):-${PR_PWD}}}
+    local rvmsize=${#${(%):-${PR_RVM}}}
+    local usersize=${#${(%):-${PR_USER}}}
+    local hostsize=${#${(%):-"@%m:%l"}}
 
-    if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-        ((PR_PWDLEN=$TERMWIDTH - $promptsize))
+
+    # Full info => remove host => remove user => shrink pwd
+    if [[ "$templatesize + $pwdsize + $rvmsize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
+        # Full info
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize + $hostsize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rvmsize + $usersize" -lt $TERMWIDTH ]]; then
+        # Remove @host
+        PR_HOST=""
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rvmsize" -lt $TERMWIDTH ]]; then
+        # remove user
+        PR_HOST=""
+        PR_USER=""
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize)))..${PR_HBAR}.)}"
     else
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
+        # shrink pwd
+        PR_HOST=""
+        PR_USER=""
+        PR_PWD="%$(($TERMWIDTH - $templatesize - $rvmsize))<...<%~%<<"
     fi
 
-    # Get APM info.
-    #if which ibam > /dev/null; then
-        #PR_APM_RESULT=`ibam --percentbattery`
-    #elif which apm > /dev/null; then
-        #PR_APM_RESULT=`apm`
-    #fi
-
-    # Git
-    update_current_git_branch
 }
-
 
 setopt extended_glob
 preexec () {
     if [[ "$TERM" == "screen" ]]; then
-        local CMD=${1[(wr)^(*=*|sudo|-*)]}
-        echo -n "\ek$CMD\e\\"
+	      local CMD=${1[(wr)^(*=*|sudo|-*)]}
+	      echo -n "\ek$CMD\e\\"
     fi
 }
 
+
 setprompt () {
+    ###
     # Need this so the prompt will work.
+
     setopt prompt_subst
 
+
+    ###
     # See if we can use colors.
+
     autoload colors zsh/terminfo
     if [[ "$terminfo[colors]" -ge 8 ]]; then
-        colors
+	      colors
     fi
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-        eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
-        (( count = $count + 1 ))
+    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
+	      eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+	      eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
+	      (( count = $count + 1 ))
     done
     PR_NO_COLOUR="%{$terminfo[sgr0]%}"
 
+    ###
     # See if we can use extended characters to look nicer.
+
     typeset -A altchar
     set -A altchar ${(s..)terminfo[acsc]}
     PR_SET_CHARSET="%{$terminfo[enacs]%}"
     PR_SHIFT_IN="%{$terminfo[smacs]%}"
     PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
     PR_HBAR=${altchar[q]:--}
-    #PR_HBAR=" "
     PR_ULCORNER=${altchar[l]:--}
     PR_LLCORNER=${altchar[m]:--}
     PR_LRCORNER=${altchar[j]:--}
     PR_URCORNER=${altchar[k]:--}
 
+
+    ###
     # Decide if we need to set titlebar text.
+
     case $TERM in
-        xterm*)
-            PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
-            ;;
-        screen)
-            PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
-            ;;
-        *)
-            PR_TITLEBAR=''
-            ;;
+	      xterm*)
+	          PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+	          ;;
+	      screen)
+	          PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
+	          ;;
+	      *)
+	          PR_TITLEBAR=''
+	          ;;
     esac
 
+
+    ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
-        PR_STITLE=$'%{\ekzsh\e\\%}'
+	      PR_STITLE=$'%{\ekzsh\e\\%}'
     else
-        PR_STITLE=''
+	      PR_STITLE=''
     fi
 
-    # APM detection
-    #if which ibam > /dev/null; then
-        #PR_APM='$PR_RED${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
-    #elif which apm > /dev/null; then
-        #PR_APM='$PR_RED${PR_APM_RESULT[(w)5,(w)6]/\% /%%}$PR_LIGHT_BLUE:'
-    #else
-        PR_APM=''
-    #fi
 
+    ###
     # Finally, the prompt.
-    PROMPT='\
-$PR_SET_CHARSET$PR_STITLE${(e)PR_TITLEBAR}\
-$PR_SHIFT_IN$PR_LIGHT_BLUE$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT(\
-$PR_GREEN%(!.%SROOT%s.%n)@%m:%l\
-$PR_SHIFT_IN$PR_LIGHT_BLUE)${(e)PR_FILLBAR}$PR_SHIFT_OUT(\
-$PR_MAGENTA%$PR_PWDLEN<...<%~%<<\
-$PR_LIGHT_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT\
+#$PR_STITLE${(e)PR_TITLEBAR}\
 
-$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT(\
-%(?..$PR_LIGHT_RED%?$PR_LIGHT_BLUE:)${(e)PR_APM}\
-$PR_YELLOW$(__current_git_branch_status)\
-$PR_LIGHT_BLUE:%(!.$PR_RED.$PR_WHITE)%#$PR_LIGHT_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
+    UL_corner="$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT"
+    LL_corner="$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT"
+    UR_corner="$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT"
+    LR_corner="$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
+
+    PROMPT='$PR_SET_CHARSET\
+$PR_BLUE$UL_corner\
+($PR_YELLOW$PR_PWD$PR_BLUE)\
+$PR_LIGHT_YELLOW`rvm_prompt_info`\
+$PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT\
+($PR_LIGHT_BLUE$PR_USER$PR_HOST$PR_BLUE)\
+$UR_corner\
+
+$LL_corner\
+($PR_GIT_STATUS$PR_BLUE)\
+$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
+(￣▽￣)~*>\
 $PR_NO_COLOUR'
 
+    # display exitcode on the right when >0
+    return_code="%(?..%{$fg[red]%}%?%{$reset_color%})"
     RPROMPT='\
-$PR_SHIFT_IN$PR_LIGHT_BLUE$PR_HBAR$PR_SHIFT_OUT(\
-$PR_YELLOW%D{%H:%M,%m-%d,%a}\
-$PR_SHIFT_IN$PR_LIGHT_BLUE)$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT\
+$PR_SHIFT_IN$return_code$PR_SHIFT_OUT\
+$PR_BLUE($PR_YELLOW$PR_TIME$PR_BLUE)\
+$LR_corner\
 $PR_NO_COLOUR'
 
-    PS2='\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
+    PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
 $PR_LIGHT_GREEN%_$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_NO_COLOUR'
+$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR '
 }
 
 setprompt

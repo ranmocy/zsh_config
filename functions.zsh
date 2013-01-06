@@ -1,5 +1,11 @@
 wiki() { dig +short txt $1.wp.dg.cx; }
 
+# ls after cd
+function chpwd() {
+    emulate -L zsh
+    ls -al
+}
+
 # Git
 current-git-branch-status () {
     update-current-git-info

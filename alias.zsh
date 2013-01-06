@@ -1,8 +1,6 @@
-# -*- mode: conf; -*-
-
 # System Alias
-alias ls="ls -G -F" #macos
-#alias ls="ls --color=auto" #linux
+#alias ls="ls -G -F" #macos
+alias ls="ls --color=auto" #coreutils or linux
 alias l="ls -l"
 alias la="ls -a"
 alias ll="ls -al"
@@ -10,16 +8,17 @@ alias ll="ls -al"
 # alias mv='mv -i'
 # alias rm='rm -i'
 alias grep='grep --colour=auto'
+
 alias g='git'
 alias t='tmuxinator'
-# alias emacs="/usr/local/Cellar/emacs/24.1/bin/emacs"
-# alias emacsclient="/usr/local/Cellar/emacs/24.1/bin/emacsclient"
+alias z='zeus'
 alias e="emacs -nw"
 alias et="emacsclient -t -a ''"
 alias ec="emacsclient -c -a ''"
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d code='/Users/ranmocy/Codespace/'
+hash -d gitcafe='/Users/ranmocy/Codespace/Works/GitCafe'
 hash -d brain='/Users/ranmocy/Documents/Brain/'
 
 # zsh alias

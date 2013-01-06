@@ -1,13 +1,10 @@
-# Path
-export PATH=~/Codespace/bin:$PATH
-# export PATH=$PATH:/usr/local/Cellar/ruby/1.9.3-p0/bin
-# export PATH=$PATH:/usr/local/Cellar/git/1.7.9.1/libexec/git-core
-# export PATH=$PATH:/usr/local/Cellar/emacs/HEAD/bin
-# for d in /usr/bin/*; do
-#     if [ -d $d ]; then
-#         PATH+=":$d"
-#     fi
-# done
+# GitCafe ENV
+export RAILS_ENV="development"
+export GITCAFE_SERVER="localhost"
+export HTTP_OR_HTTPS="http"
+# useless?
+export MONGOID_HOST="localhost"
+export MONGOID_DATABASE="gitcafe_dev"
 
 # History
 export HISTSIZE=10000 #历史纪录条目数量
@@ -21,9 +18,9 @@ setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
 setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
 
 # Tmuxinator
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-export EDITOR="emacsclient -c -a 'vim'"
+export EDITOR="s"
 export SHELL="/bin/zsh"
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
 
 # RVM init
 [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm

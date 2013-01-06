@@ -112,7 +112,7 @@ $PR_LIGHT_BLUE%(!.%SROOT%s.%n)$PR_GREY@$PR_GREEN%m:%l\
 $UR_corner\
 
 $LL_corner\
-`current-git-branch-status`\
+%$PR_PWDLEN>...>`current-git-branch-status`%<<\
 $PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 (￣▽￣)~*>\
 $PR_NO_COLOUR'

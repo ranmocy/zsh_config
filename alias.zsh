@@ -1,6 +1,6 @@
 # System Alias
 #alias ls="ls -G -F" #macos
-alias ls="ls --color=auto" #coreutils or linux
+alias ls="ls --color=auto -hF" #coreutils or linux
 alias l="ls -l"
 alias la="ls -a"
 alias ll="ls -al"

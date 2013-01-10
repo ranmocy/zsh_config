@@ -10,22 +10,21 @@ function chpwd() {
 current-git-branch-status () {
     update-current-git-info
     if [ -n "$__CURRENT_GIT_BRANCH" ]; then
-        local s="$PR_GREEN$__CURRENT_GIT_BRANCH$PR_LIGHT_BLUE"
         case "$__CURRENT_GIT_BRANCH_STATUS" in
             ahead)
-                s+="↑"
+                s="↑"
                 ;;
             diverged)
-                s+="↕"
+                s="↕"
                 ;;
             behind)
-                s+="↓"
+                s="↓"
                 ;;
         esac
         if [ -n "$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
             s+="⚡"
         fi
-        echo "$s$PR_NO_COLOUR"
+        echo "$PR_LIGHT_YELLOW$s$PR_GREEN$__CURRENT_GIT_BRANCH$PR_NO_COLOUR"
     fi
 }
 

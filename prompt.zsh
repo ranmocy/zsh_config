@@ -4,7 +4,8 @@ function precmd {
     PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
     PR_PWD="%~"
-    PR_RVM=`rvm_prompt_info`
+    PR_RUBY="(`current-rbenv-info`)"
+    # PR_RUBY=`rvm_prompt_info`
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 
@@ -16,7 +17,7 @@ function precmd {
     local TERMWIDTH=$(($COLUMNS-1))
     local templatesize=${#${(%):-${PR_TEMPLATE}}}
     local pwdsize=${#${(%):-${PR_PWD}}}
-    local rvmsize=${#${(%):-${PR_RVM}}}
+    local rubysize=${#${(%):-${PR_RUBY}}}
     local usersize=${#${(%):-${PR_USER}}}
     local hostsize=${#${(%):-"@%m:%l"}}
 
@@ -25,23 +26,23 @@ function precmd {
     local timesize=${#${(%):-${PR_TIME}}}
 
     # Full info => remove host => remove user => shrink pwd
-    if [[ "$templatesize + $pwdsize + $rvmsize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
+    if [[ "$templatesize + $pwdsize + $rubysize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
         # Full info
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize + $hostsize)))..${PR_HBAR}.)}"
-    elif [[ "$templatesize + $pwdsize + $rvmsize + $usersize" -lt $TERMWIDTH ]]; then
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize + $hostsize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rubysize + $usersize" -lt $TERMWIDTH ]]; then
         # Remove @host
         PR_HOST=""
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize + $usersize)))..${PR_HBAR}.)}"
-    elif [[ "$templatesize + $pwdsize + $rvmsize" -lt $TERMWIDTH ]]; then
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize)))..${PR_HBAR}.)}"
+    elif [[ "$templatesize + $pwdsize + $rubysize" -lt $TERMWIDTH ]]; then
         # remove user
         PR_HOST=""
         PR_USER=""
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rvmsize)))..${PR_HBAR}.)}"
+        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize)))..${PR_HBAR}.)}"
     else
         # shrink pwd
         PR_HOST=""
         PR_USER=""
-        PR_PWD="%$(($TERMWIDTH - $templatesize - $rvmsize))<...<%~%<<"
+        PR_PWD="%$(($TERMWIDTH - $templatesize - $rubysize))<...<%~%<<"
     fi
 
     local gitmin=10
@@ -138,7 +139,7 @@ setprompt () {
     PROMPT='$PR_SET_CHARSET\
 $PR_BLUE$UL_corner\
 ($PR_YELLOW$PR_PWD$PR_BLUE)\
-$PR_LIGHT_YELLOW`rvm_prompt_info`\
+$PR_LIGHT_YELLOW$PR_RUBY\
 $PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT\
 ($PR_LIGHT_BLUE$PR_USER$PR_HOST$PR_BLUE)\
 $UR_corner\

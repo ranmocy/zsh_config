@@ -6,6 +6,18 @@ function chpwd() {
     ls -al
 }
 
+# Rbenv
+current-rbenv-info() {
+  local version=$(rbenv version-name)
+  # local gemset=$(rbenv gemset active 2&>/dev/null | sed -e ":a" -e '$ s/\n/+/gp;N;b a' | head -n1)
+  local gemset=$(rbenv gemset active 2&>/dev/null | head -n1)
+  if [ -z "$gemset" ]; then
+    echo "$version"
+  else
+    echo "$version@$gemset"
+  fi
+}
+
 # Git
 current-git-branch-status () {
     update-current-git-info

@@ -1,6 +1,7 @@
 # Path
-export PATH=$HOME/.rbenv/bin:$PATH:$HOME/bin
-
+export PATH=$PATH:$HOME/bin
+# export PATH=$HOME/.rbenv/bin:$PATH
+export PATH=$PATH:$HOME/.rvm/bin
 
 # GitCafe ENV
 export RAILS_ENV="development"
@@ -34,10 +35,10 @@ export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 
 # Rbenv
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 # RVM init
-# [[ -s ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 #==========CUSTOMS==========##
 # Functions

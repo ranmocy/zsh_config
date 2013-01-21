@@ -4,8 +4,8 @@ function precmd {
     PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
     PR_PWD="%~"
-    PR_RUBY="(`current-rbenv-info`)"
-    # PR_RUBY=`rvm_prompt_info`
+    # PR_RUBY="(`current-rbenv-info`)"
+    PR_RUBY=`rvm_prompt_info`
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 

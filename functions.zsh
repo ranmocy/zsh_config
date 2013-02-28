@@ -1,10 +1,12 @@
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 wiki() { dig +short txt $1.wp.dg.cx; }
 
 # ls after cd
-function chpwd() {
-    emulate -L zsh
-    ls -al
-}
+# function chpwd() {
+#     emulate -L zsh
+#     ls -al
+# }
 
 # Rbenv
 current-rbenv-info() {
@@ -120,4 +122,26 @@ mem() {
 mountt() {
     ans=`(echo "DEVICE PATH TYPE FLAGS" && mount )| sed 's/map /map::/g' | sed 's/on//g' | column -t`
     echo $ans
+}
+
+listtask() {
+    if [ -z $1 ]; then
+        echo "USAGE: listtask PROGRAM_NAME"
+        exit 127
+    fi
+    ps aux | grep -i $1 | grep -v grep
+}
+
+listkill() {
+    if [ -z $1 ]; then
+        echo "USAGE: listkill PROGRAM_NAME [SIGNAL]"
+        exit 127
+    fi
+
+    if [[ -z $2 ]]; then
+        local sig=3
+    else
+        local sig=$2
+    fi
+    listtask $1 | awk '{print $2}' | xargs kill -$sig
 }

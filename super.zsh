@@ -1,15 +1,24 @@
+export EDITOR="s"
+export SHELL="/bin/zsh"
+
 # Path
 export PATH=$PATH:$HOME/bin
 # export PATH=$HOME/.rbenv/bin:$PATH
-export PATH=$PATH:$HOME/.rvm/bin
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GitCafe ENV
 export RAILS_ENV="development"
 export GITCAFE_SERVER="localhost"
 export HTTP_OR_HTTPS="http"
-# useless?
 export MONGOID_HOST="localhost"
-export MONGOID_DATABASE="gitcafe_dev"
+export MONGOID_DATABASE="git_cafe_development"
+
+# Boost Ruby
+export RUBY_HEAP_MIN_SLOTS=1000000
+export RUBY_HEAP_SLOTS_INCREMENT=1000000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=1000000000
+export RUBY_HEAP_FREE_MIN=500000
 
 # History
 export HISTSIZE=10000 #历史纪录条目数量
@@ -22,18 +31,6 @@ setopt AUTO_PUSHD #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
 setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
 setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
 
-# Tmuxinator
-export EDITOR="s"
-export SHELL="/bin/zsh"
-[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
-
-# Boost Ruby
-export RUBY_HEAP_MIN_SLOTS=1000000
-export RUBY_HEAP_SLOTS_INCREMENT=1000000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=1000000000
-export RUBY_HEAP_FREE_MIN=500000
-
 # Rbenv
 # eval "$(rbenv init -)"
 
@@ -41,20 +38,6 @@ export RUBY_HEAP_FREE_MIN=500000
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 #==========CUSTOMS==========##
-# Functions
-source ~/.zshrc.d/functions.zsh
-
-# Alias
-source ~/.zshrc.d/alias.zsh
-
-# Prompt
-export LC_TIME=POSIX
-source ~/.zshrc.d/prompt.zsh
-
-# Auto completion
-source ~/.zshrc.d/auto_completion.zsh
-
-#==========SETUPS==========#
 # As a word
 WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 

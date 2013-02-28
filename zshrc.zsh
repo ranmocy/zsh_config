@@ -26,9 +26,14 @@ DISABLE_AUTO_UPDATE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby command-coloring rvm osx)
+plugins=(osx command-coloring rvm)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 source ~/.zshrc.d/super.zsh
+source ~/.zshrc.d/functions.zsh
+source ~/.zshrc.d/alias.zsh
+export LC_TIME=POSIX
+source ~/.zshrc.d/prompt.zsh
+source ~/.zshrc.d/auto_completion.zsh

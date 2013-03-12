@@ -10,17 +10,17 @@ alias ll="ls -al"
 alias grep='grep --colour=auto' #coreutils or linux
 
 alias g='git'
-alias t='tmuxinator'
+alias t='trash'
 alias z='zeus'
 alias e="emacs -nw"
 alias et="emacsclient -t -a ''"
 alias ec="emacsclient -c -a ''"
-alias gc='RAILS_ENV='' bundle exec guard -c'
+alias gc='env -u RAILS_ENV bundle exec guard -c'
 alias lt='listtask'
 alias lk='listkill'
 
-alias sgp='ssh gitcafe@gitcafe.com'
-alias sgs='ssh gitcafe@gitcafe.staging'
+alias mp='mosh gitcafe@gitcafe.com'
+alias ms='mosh gitcafe@gitcafe.staging'
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d code='/Users/ranmocy/Codespace/'

@@ -41,10 +41,10 @@ setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪
 # As a word
 WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 
-# Extend Math
-zmodload zsh/mathfunc
-autoload -U zsh-mime-setup
-zsh-mime-setup
+# Extend Math [SLOW]
+# zmodload zsh/mathfunc
+# autoload -U zsh-mime-setup
+# zsh-mime-setup
 
 #[Esc][h] short man
 alias run-help >&/dev/null && unalias run-help

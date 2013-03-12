@@ -3,13 +3,14 @@ setopt AUTO_LIST
 setopt AUTO_MENU
 setopt MENU_COMPLETE #开启此选项，补全时会直接选中菜单项
 
-autoload -U compinit
-compinit
+# Too slow...
+# autoload -U compinit
+# compinit
 
 # 自动补全缓存
-#zstyle ':completion::complete:*' use-cache on
-#zstyle ':completion::complete:*' cache-path .zcache
-#zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path .zcache
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
 # 自动补全选项
 zstyle ':completion:*' verbose yes

@@ -1,3 +1,5 @@
+BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -28,12 +30,28 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(osx command-coloring rvm)
 
-source $ZSH/oh-my-zsh.sh
+# Switch for benchmark
+export BENCHMARK=true
 
-# Customize to your needs...
-source ~/.zshrc.d/super.zsh
-source ~/.zshrc.d/functions.zsh
-source ~/.zshrc.d/alias.zsh
-export LC_TIME=POSIX
-source ~/.zshrc.d/prompt.zsh
-source ~/.zshrc.d/auto_completion.zsh
+benchmark_begin() {
+  export BENCHMARK_START_TIME=`date +%s.%N`
+}
+benchmark_end() {
+  export BENCHMARK_END_TIME=`date +%s.%N`
+  if [[ $BENCHMARK == true ]]; then
+    echo $1:$(( $BENCHMARK_END_TIME - $BENCHMARK_START_TIME ))
+  fi
+}
+
+benchmark_begin; source $ZSH/oh-my-zsh.sh; benchmark_end oh-my-zsh;
+benchmark_begin; source ~/.zshrc.d/super.zsh; benchmark_end super;
+benchmark_begin; source ~/.zshrc.d/functions.zsh; benchmark_end functions;
+benchmark_begin; source ~/.zshrc.d/alias.zsh; benchmark_end alias;
+benchmark_begin; source ~/.zshrc.d/prompt.zsh; benchmark_end prompt;
+benchmark_begin; source ~/.zshrc.d/auto_completion.zsh; benchmark_end auto_completion;
+
+if [[ $BENCHMARK == true ]]; then
+  BENCHMARK_TOTAL_END_TIME=`date +%s.%N`
+  export BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
+  echo Total: $BENCHMARK_TOTAL_TIME
+fi

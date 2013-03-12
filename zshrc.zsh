@@ -31,7 +31,7 @@ DISABLE_AUTO_UPDATE="true"
 plugins=(osx command-coloring rvm)
 
 # Switch for benchmark
-export BENCHMARK=true
+# export BENCHMARK=true
 
 benchmark_begin() {
   export BENCHMARK_START_TIME=`date +%s.%N`

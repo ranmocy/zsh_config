@@ -127,7 +127,7 @@ mountt() {
 listtask() {
     if [ -z $1 ]; then
         echo "USAGE: listtask PROGRAM_NAME"
-        exit 127
+        return 127
     fi
     ps aux | grep -i $1 | grep -v grep
 }
@@ -135,7 +135,7 @@ listtask() {
 listkill() {
     if [ -z $1 ]; then
         echo "USAGE: listkill PROGRAM_NAME [SIGNAL]"
-        exit 127
+        return 127
     fi
 
     if [[ -z $2 ]]; then
@@ -144,4 +144,14 @@ listkill() {
         local sig=$2
     fi
     listtask $1 | awk '{print $2}' | xargs kill -$sig
+}
+
+bak() {
+    if [[ -z $1 ]]; then
+        echo "USAGE: bak FILENAME"
+        echo "This will cp FILENAME to FILENAME.bak"
+        return 127
+    fi
+
+    cp -i $1 $1.bak
 }

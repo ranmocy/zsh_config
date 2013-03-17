@@ -3,10 +3,10 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 wiki() { dig +short txt $1.wp.dg.cx; }
 
 # ls after cd
-# function chpwd() {
-#     emulate -L zsh
-#     ls -al
-# }
+function chpwd() {
+    emulate -L zsh
+    ls -al
+}
 
 # Rbenv
 current-rbenv-info() {

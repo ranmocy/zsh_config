@@ -10,7 +10,6 @@ function precmd {
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 
     PR_GIT=`current-git-branch-status`
-    # PR_MOE="(￣▽￣)~*"
     PR_MOE="(～￣▽￣)～"
     PR_TIME="%D{%H:%M:%S %b %d}"
 

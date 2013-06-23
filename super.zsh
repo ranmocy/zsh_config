@@ -37,6 +37,9 @@ setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪
 # RVM init
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+# Highlight command
+source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 #==========CUSTOMS==========##
 # As a word
 WORDCHARS='*?_-[]~=&;!#$%^(){}<>'

@@ -36,7 +36,7 @@ current-git-branch-status () {
                 ;;
         esac
         if [ -n "$__CURRENT_GIT_BRANCH_IS_DIRTY" ]; then
-            s+="⚡"
+            s+="?"
         fi
         echo "$PR_LIGHT_YELLOW$s$PR_GREEN$__CURRENT_GIT_BRANCH$PR_NO_COLOUR"
     fi

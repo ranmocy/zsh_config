@@ -11,7 +11,7 @@ alias grep='grep --colour=auto' #coreutils or linux
 
 alias g='git'
 alias t='trash'
-alias z='zeus'
+alias z="RAILS_ENV='' zeus"
 alias e="emacs -nw"
 alias et="emacsclient -t -a ''"
 alias ec="emacsclient -c -a ''"

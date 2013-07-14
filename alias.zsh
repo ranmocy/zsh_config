@@ -24,10 +24,12 @@ alias ms='mosh gitcafe@gitcafe.staging'
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d code='/Users/ranmocy/Codespace/'
-hash -d test='/Users/ranmocy/Codespace/Tests'
 hash -d work='/Users/ranmocy/Codespace/Works'
-hash -d gitcafe='/Users/ranmocy/Codespace/Works/GitCafe'
+hash -d test='/Users/ranmocy/Codespace/Tests'
+hash -d hosted='/Users/ranmocy/Codespace/Hosted'
 hash -d brain='/Users/ranmocy/Documents/Brain/'
+hash -d gitcafe='/Users/ranmocy/Codespace/Works/GitCafe'
+hash -d guard-rails='/Users/ranmocy/Codespace/Hosted/guard-rails'
 
 # zsh alias
 alias history_top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'

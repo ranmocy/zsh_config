@@ -1,9 +1,11 @@
-export EDITOR="s"
+export EDITOR="emacsclient -t -a 'vim'"
 export SHELL="/bin/zsh"
 
 # Path
-export PATH=$PATH:$HOME/bin
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=$HOME/bin:$PATH
 # export PATH=$HOME/.rbenv/bin:$PATH
+PATH="$HOME/Library/Haskell/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GitCafe ENV

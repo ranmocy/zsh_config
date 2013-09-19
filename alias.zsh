@@ -13,8 +13,8 @@ alias g='git'
 alias t='trash'
 alias z="RAILS_ENV='' zeus"
 alias e="emacs -nw"
-alias et="emacsclient -t -a ''"
-alias ec="emacsclient -c -a ''"
+alias et="emacsclient -t -a 'vim'"
+alias ec="emacsclient -c -a 'vim'"
 alias gc='env -u RAILS_ENV bundle exec guard -c'
 alias lt='listtask'
 alias lk='listkill'

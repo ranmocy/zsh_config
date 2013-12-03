@@ -63,7 +63,7 @@ update-current-git-info () {
                 __CURRENT_GIT_BRANCH_STATUS='ahead'
             elif [[ $arr[2] =~ 'diverged' ]]; then
                 __CURRENT_GIT_BRANCH_STATUS='diverged'
-            else
+            elif [[ $arr[2] =~ 'behind' ]]; then
                 __CURRENT_GIT_BRANCH_STATUS='behind'
             fi
         fi

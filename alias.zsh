@@ -10,7 +10,7 @@ alias ll="ls -al"
 alias grep='grep --colour=auto' #coreutils or linux
 
 alias g='git'
-alias t='trash'
+#alias t='trash'
 alias z="RAILS_ENV='' zeus"
 alias e="emacs -nw"
 alias et="emacsclient -t -a 'vim'"

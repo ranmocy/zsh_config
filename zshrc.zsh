@@ -57,6 +57,7 @@ benchmark_begin; source ~/.zshrc.d/functions.zsh; benchmark_end functions;
 benchmark_begin; source ~/.zshrc.d/alias.zsh; benchmark_end alias;
 benchmark_begin; source ~/.zshrc.d/prompt.zsh; benchmark_end prompt;
 benchmark_begin; source ~/.zshrc.d/auto_completion.zsh; benchmark_end auto_completion;
+benchmark_begin; source ~/.zshrc.d/z/z.sh; benchmark_end z;
 benchmark_begin; source ~/.zshrc.d/sensitive.zsh; benchmark_end functions;
 
 if [[ $BENCHMARK == true ]]; then

@@ -1,4 +1,20 @@
-BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`
+# Switch for benchmark
+# BENCHMARK=true
+
+if [[ $BENCHMARK == true ]]; then
+    BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`
+fi
+
+benchmark(){
+    if [[ $BENCHMARK == true ]]; then
+        start_time=`date +%s.%N`
+        source $1
+        echo $1:"\t"$(( `date +%s.%N` - $start_time ))
+    else
+        source $1
+    fi
+}
+
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -36,32 +52,17 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
-
-# Switch for benchmark
-# export BENCHMARK=true
-
-benchmark_begin() {
-  export BENCHMARK_START_TIME=`date +%s.%N`
-}
-benchmark_end() {
-  export BENCHMARK_END_TIME=`date +%s.%N`
-  if [[ $BENCHMARK == true ]]; then
-    echo $1:$(( $BENCHMARK_END_TIME - $BENCHMARK_START_TIME ))
-  fi
-}
-
-benchmark_begin; source $ZSH/oh-my-zsh.sh; benchmark_end oh-my-zsh;
-benchmark_begin; source ~/.zshrc.d/super.zsh; benchmark_end super;
-benchmark_begin; source ~/.zshrc.d/functions.zsh; benchmark_end functions;
-benchmark_begin; source ~/.zshrc.d/alias.zsh; benchmark_end alias;
-benchmark_begin; source ~/.zshrc.d/prompt.zsh; benchmark_end prompt;
-benchmark_begin; source ~/.zshrc.d/auto_completion.zsh; benchmark_end auto_completion;
-benchmark_begin; source ~/.zshrc.d/z/z.sh; benchmark_end z;
-benchmark_begin; source ~/.zshrc.d/sensitive.zsh; benchmark_end functions;
+benchmark $ZSH/oh-my-zsh.sh
+benchmark ~/.zshrc.d/super.zsh
+benchmark ~/.zshrc.d/functions.zsh
+benchmark ~/.zshrc.d/alias.zsh
+benchmark ~/.zshrc.d/prompt.zsh
+benchmark ~/.zshrc.d/auto_completion.zsh
+benchmark ~/.zshrc.d/z/z.sh
+benchmark ~/.zshrc.d/sensitive.zsh
 
 if [[ $BENCHMARK == true ]]; then
   BENCHMARK_TOTAL_END_TIME=`date +%s.%N`
-  export BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
+  BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
   echo Total: $BENCHMARK_TOTAL_TIME
 fi

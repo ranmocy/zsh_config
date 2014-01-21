@@ -9,6 +9,7 @@ alias ll="ls -al"
 #alias rm='rm -i'
 alias grep='grep --colour=auto' #coreutils or linux
 
+alias b='brew'
 alias g='git'
 #alias t='trash'
 alias z="RAILS_ENV='' zeus"

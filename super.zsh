@@ -2,6 +2,9 @@ export EDITOR="emacsclient -t -a 'vim'"
 export SHELL="/bin/zsh"
 
 # Path
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=$HOME/bin:$PATH
 # export PATH=$HOME/.rbenv/bin:$PATH

@@ -54,8 +54,8 @@ plugins=(git)
 
 benchmark $ZSH/oh-my-zsh.sh
 benchmark ~/.zshrc.d/super.zsh
-benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/alias.zsh
+benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/prompt.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh

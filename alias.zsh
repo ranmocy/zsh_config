@@ -10,6 +10,7 @@ alias ll="ls -al"
 alias grep='grep --colour=auto' #coreutils or linux
 
 alias b='brew'
+alias bup='brew update && brew outdated && brew upgrade && brew cleanup'
 alias g='git'
 #alias t='trash'
 alias z="RAILS_ENV='' zeus"

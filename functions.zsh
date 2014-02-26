@@ -129,7 +129,7 @@ listtask() {
         echo "USAGE: listtask PROGRAM_NAME"
         return 127
     fi
-    ps aux | grep -i $1 | grep -v grep
+    ps aux | grep -v grep | grep -i $1
 }
 
 listkill() {
@@ -143,6 +143,8 @@ listkill() {
     else
         local sig=$2
     fi
+
+    echo "kill $1 with signal $sig."
     listtask $1 | awk '{print $2}' | xargs kill -$sig
 }
 

@@ -24,15 +24,35 @@ alias lk='listkill'
 alias mp='mosh gitcafe@gitcafe.com'
 alias ms='mosh gitcafe@gitcafe.staging'
 
+# Twitter Peacock
+alias eggsetup='killall ruby; killall autossh; script/tunnel; bundle exec script/mockorail'
+alias eggstart='RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 rails s'
+alias eggzeus='RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 bundle exec zeus start'
+alias twmem="ldapsearch -LLLxh ldap.local.twitter.com -b dc=ods,dc=twitter,dc=corp uid=$USER | grep twmem"
+hash -d peacock="$HOME/workspace/peacock"
+smoke() {
+    if [ -z $1 ]; then
+        echo "USAGE: smoke STAGING_ADDRESS"
+        return 127
+    fi
+
+    SITE_URL=$1 bundle exec rake smokesuite:campaigns &
+    SITE_URL=$1 bundle exec rake smokesuite:analytics &
+    SITE_URL=$1 bundle exec rake smokesuite:other     &
+    echo "All three test are running..."
+    wait
+    echo "Done"
+}
+
 # Path Alias //进入相应的路径时只要 cd ~xxx
-hash -d code='/Users/ranmocy/Codespace/'
-hash -d work='/Users/ranmocy/Codespace/Works'
-hash -d test='/Users/ranmocy/Codespace/Tests'
-hash -d hosted='/Users/ranmocy/Codespace/Hosted'
-hash -d usaco='/Users/ranmocy/Codespace/USACO/'
-hash -d brain='/Users/ranmocy/Documents/Brain/'
-hash -d gitcafe='/Users/ranmocy/Codespace/Works/GitCafe'
-hash -d guard-rails='/Users/ranmocy/Codespace/Hosted/guard-rails'
+hash -d code="$HOME/Codespace/"
+hash -d work="$HOME/Codespace/Works"
+hash -d test="$HOME/Codespace/Tests"
+hash -d hosted="$HOME/Codespace/Hosted"
+hash -d usaco="$HOME/Codespace/USACO/"
+hash -d brain="$HOME/Documents/Brain/"
+hash -d gitcafe="$HOME/Codespace/Works/GitCafe"
+hash -d guard-rails="$HOME/Codespace/Hosted/guard-rails"
 
 # zsh alias
 alias history_top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'

@@ -1,4 +1,4 @@
-export EDITOR="emacsclient -t -a 'vim'"
+export EDITOR="s -w"
 export SHELL="/bin/zsh"
 
 # Path
@@ -7,12 +7,11 @@ if [ -x /usr/libexec/path_helper ]; then
 fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=$HOME/bin:$PATH
-# export PATH=$HOME/.rbenv/bin:$PATH
 PATH="$HOME/Library/Haskell/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GitCafe ENV
-export RAILS_ENV="development"
+# export RAILS_ENV="development"
 export GITCAFE_SERVER="localhost"
 export HTTP_OR_HTTPS="http"
 export MONGOID_HOST="localhost"
@@ -40,11 +39,16 @@ setopt AUTO_PUSHD #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
 setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
 setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
 
-# Rbenv
-# eval "$(rbenv init -)"
 
-# RVM init
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+if [[ `whoami` == "ranmocy" ]]; then
+    export PATH=$PATH:$HOME/.rvm/bin
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+else
+    export PATH=$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+    [[ -e "/opt/twitter/nvm/nvm.sh" ]] && source "/opt/twitter/nvm/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+fi
 
 # Highlight command
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

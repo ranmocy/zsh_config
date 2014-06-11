@@ -66,5 +66,3 @@ if [[ $BENCHMARK == true ]]; then
   BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
   echo Total: $BENCHMARK_TOTAL_TIME
 fi
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

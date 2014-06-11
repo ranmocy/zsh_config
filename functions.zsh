@@ -157,3 +157,13 @@ bak() {
 
     cp -i $1 $1.bak
 }
+
+function telephone() {
+    if [[ -z $1 ]]; then
+        echo "USAGE: telephone REMOTEHOST"
+        echo "This will give you a telephone via SSH."
+        return 127
+    fi
+
+    rec -t wav - | ssh $1 play -t wav
+}

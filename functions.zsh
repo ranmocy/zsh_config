@@ -96,13 +96,13 @@ user-complete () {
 zle -N user-complete
 bindkey "\t" user-complete
 
-# Calculator
-arith-eval-echo() {
-    LBUFFER="${LBUFFER}echo \$(( "
-    RBUFFER=" ))$RBUFFER"
-}
-zle -N arith-eval-echo
-bindkey "\e\e" arith-eval-echo
+# Double-ESC for Calculator
+# arith-eval-echo() {
+#     LBUFFER="${LBUFFER}echo \$(( "
+#     RBUFFER=" ))$RBUFFER"
+# }
+# zle -N arith-eval-echo
+# bindkey "\e\e" arith-eval-echo
 
 # CPU MEM info
 cpu() {

@@ -25,26 +25,6 @@ alias mp='mosh gitcafe@gitcafe.com'
 alias ms='mosh gitcafe@gitcafe.staging'
 alias sshproxy='ssh -TfnND 4444 gitcafe@gitcafe.staging'
 
-# Twitter Peacock
-alias eggsetup='killall ruby; script/tunnel -r; bundle exec script/mockorail'
-alias eggstart='bundle install && RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 rails s'
-alias eggzeus='bundle install && RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 bundle exec zeus start'
-alias twmem="ldapsearch -LLLxh ldap.local.twitter.com -b dc=ods,dc=twitter,dc=corp uid=$USER | grep twmem"
-hash -d peacock="$HOME/workspace/peacock"
-smoke() {
-    if [ -z $1 ]; then
-        echo "USAGE: smoke STAGING_ADDRESS"
-        return 127
-    fi
-
-    SITE_URL=$1 bundle exec rake smokesuite:campaigns &
-    SITE_URL=$1 bundle exec rake smokesuite:analytics &
-    SITE_URL=$1 bundle exec rake smokesuite:other     &
-    echo "All three test are running..."
-    wait
-    echo "Done"
-}
-
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d code="$HOME/Codespace/"
 hash -d work="$HOME/Codespace/Works"
@@ -61,5 +41,3 @@ alias topcpu='top -F -R -o cpu'
 alias topmem='top -F -R -o reg'
 alias tree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias record="ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg"
-
-alias checkmail="curl -u ranmocy@gmail.com --silent \"https://mail.google.com/mail/feed/atom\" | perl -ne 'print \"Subject: $1 \" if /<title>(.+?)<\/title>/ && $title++;print \"(from $1)\n\" if /<email>(.+?)<\/email>/; '"

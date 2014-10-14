@@ -1,5 +1,4 @@
 export EDITOR="s -w"
-export SHELL="/bin/zsh"
 
 # Path
 if [ -x /usr/libexec/path_helper ]; then
@@ -25,9 +24,6 @@ export RUBY_GC_HEAP_GROWTH_FACTOR=1.1
 export RUBY_GC_HEAP_GROWTH_MAX_SLOTS=10000000 # 10M
 export RUBY_GC_MALLOC_LIMIT_MAX=1000000000    # 1G
 export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.1
-# export RUBY_GC_OLDMALLOC_LIMIT=500000000      # 500M
-# export RUBY_GC_OLDMALLOC_LIMIT_MAX=1000000000 # 1G
-# export RUBY_GC_OLDMALLOC_LIMIT_GROWTH_FACTOR=1.1
 
 # History
 export HISTSIZE=10000 #历史纪录条目数量
@@ -44,12 +40,6 @@ setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪
 if [[ `whoami` == "ranmocy" ]]; then
     export PATH=$PATH:$HOME/.rvm/bin
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-else
-    export PATH=$HOME/.rbenv/bin:$PATH
-    eval "$(rbenv init -)"
-    # [[ -s /opt/twitter/rvm/scripts/rvm ]] && source /opt/twitter/rvm/scripts/rvm
-    [[ -e "/opt/twitter/nvm/nvm.sh" ]] && source "/opt/twitter/nvm/nvm.sh"
-    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 fi
 
 # Highlight command

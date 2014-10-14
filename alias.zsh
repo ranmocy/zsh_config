@@ -23,11 +23,12 @@ alias lk='listkill'
 
 alias mp='mosh gitcafe@gitcafe.com'
 alias ms='mosh gitcafe@gitcafe.staging'
+alias sshproxy='ssh -TfnND 4444 gitcafe@gitcafe.staging'
 
 # Twitter Peacock
-alias eggsetup='killall ruby; killall autossh; script/tunnel; bundle exec script/mockorail'
-alias eggstart='RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 rails s'
-alias eggzeus='RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 bundle exec zeus start'
+alias eggsetup='killall ruby; script/tunnel -r; bundle exec script/mockorail'
+alias eggstart='bundle install && RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 rails s'
+alias eggzeus='bundle install && RAILS_ENV=eggubator USE_PRODUCTION_SERVICES=1 bundle exec zeus start'
 alias twmem="ldapsearch -LLLxh ldap.local.twitter.com -b dc=ods,dc=twitter,dc=corp uid=$USER | grep twmem"
 hash -d peacock="$HOME/workspace/peacock"
 smoke() {
@@ -50,7 +51,7 @@ hash -d work="$HOME/Codespace/Works"
 hash -d test="$HOME/Codespace/Tests"
 hash -d hosted="$HOME/Codespace/Hosted"
 hash -d usaco="$HOME/Codespace/USACO/"
-hash -d brain="$HOME/Documents/Brain/"
+hash -d brain="$HOME/Codespace/Brain/"
 hash -d gitcafe="$HOME/Codespace/Works/GitCafe"
 hash -d guard-rails="$HOME/Codespace/Hosted/guard-rails"
 

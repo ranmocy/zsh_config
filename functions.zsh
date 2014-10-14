@@ -167,3 +167,11 @@ function telephone() {
 
     rec -t wav - | ssh $1 play -t wav
 }
+
+function httpserver() {
+    local port=$1;
+    if [[ -z $1 ]]; then
+        port="8000"
+    fi
+    python -m SimpleHTTPServer $port & (open http://localhost:$port && fg)
+}

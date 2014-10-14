@@ -6,8 +6,9 @@ if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+PATH=$PATH:/opt/i386dev/bin
+PATH=$HOME/Library/Haskell/bin:$PATH
 export PATH=$HOME/bin:$PATH
-PATH="$HOME/Library/Haskell/bin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # GitCafe ENV
@@ -46,6 +47,7 @@ if [[ `whoami` == "ranmocy" ]]; then
 else
     export PATH=$HOME/.rbenv/bin:$PATH
     eval "$(rbenv init -)"
+    # [[ -s /opt/twitter/rvm/scripts/rvm ]] && source /opt/twitter/rvm/scripts/rvm
     [[ -e "/opt/twitter/nvm/nvm.sh" ]] && source "/opt/twitter/nvm/nvm.sh"
     [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 fi

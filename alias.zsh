@@ -13,7 +13,6 @@ alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade && brew cleanup'
 alias g='git'
 #alias t='trash'
-alias z="RAILS_ENV='' zeus"
 alias e="emacs -nw"
 alias et="emacsclient -t -a 'vim'"
 alias ec="emacsclient -c --no-wait -a 'vim'"

@@ -1,5 +1,6 @@
 # Switch for benchmark
 # BENCHMARK=true
+# PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 
 if [[ $BENCHMARK == true ]]; then
     BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`

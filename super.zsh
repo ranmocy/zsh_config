@@ -5,8 +5,7 @@ if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-PATH=$PATH:/opt/i386dev/bin
-PATH=$HOME/Library/Haskell/bin:$PATH
+# PATH=$HOME/Library/Haskell/bin:$PATH
 export PATH=$HOME/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 

@@ -60,7 +60,6 @@ benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/prompt.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh
-benchmark ~/.zshrc.d/sensitive.zsh
 
 if [[ $BENCHMARK == true ]]; then
   BENCHMARK_TOTAL_END_TIME=`date +%s.%N`

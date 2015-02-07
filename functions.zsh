@@ -4,7 +4,7 @@ wiki() { dig +short txt $1.wp.dg.cx; }
 
 # ls after cd
 function chpwd() {
-    emulate -L zsh
+    # emulate -L zsh
     l
 }
 

@@ -12,7 +12,9 @@ alias grep='grep --colour=auto' #coreutils or linux
 alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade && brew cleanup'
 alias g='git'
-#alias t='trash'
+alias t='trash'
+alias ta='tmux -CC attach'
+alias tc='tmux -CC'
 alias e="emacs -nw"
 alias et="emacsclient -t -a 'vim'"
 alias ec="emacsclient -c --no-wait -a 'vim'"
@@ -25,14 +27,15 @@ alias ms='mosh gitcafe@gitcafe.staging'
 alias sshproxy='ssh -TfnND 4444 gitcafe@gitcafe.staging'
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
+hash -d assign="$HOME/Codespace/Assignments/"
 hash -d code="$HOME/Codespace/"
-hash -d work="$HOME/Codespace/Works"
-hash -d test="$HOME/Codespace/Tests"
-hash -d hosted="$HOME/Codespace/Hosted"
+hash -d work="$HOME/Codespace/Works/"
+hash -d test="$HOME/Codespace/Tests/"
+hash -d hosted="$HOME/Codespace/Hosted/"
 hash -d usaco="$HOME/Codespace/USACO/"
 hash -d brain="$HOME/Codespace/Brain/"
-hash -d gitcafe="$HOME/Codespace/Works/GitCafe"
-hash -d guard-rails="$HOME/Codespace/Hosted/guard-rails"
+hash -d gitcafe="$HOME/Codespace/Works/GitCafe/"
+hash -d guard-rails="$HOME/Codespace/Hosted/guard-rails/"
 
 # zsh alias
 alias history_top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'

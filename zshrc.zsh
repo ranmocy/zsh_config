@@ -24,7 +24,7 @@ export ZSH=$HOME/.zshrc.d/oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="robbyrussell"
+ZSH_THEME="ranmocy"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -58,7 +58,7 @@ export ZSH=$HOME/.zshrc.d/oh-my-zsh
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=$HOME/.zshrc.d
+ZSH_CUSTOM=$HOME/.zshrc.d/custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -72,7 +72,7 @@ plugins=()
 # if [ -x /usr/libexec/path_helper ]; then
 #     eval `/usr/libexec/path_helper -s`
 # fi
-# PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=$HOME/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fpath=(~/.zshrc.d/completions $fpath)
@@ -81,7 +81,6 @@ benchmark $ZSH/oh-my-zsh.sh
 benchmark ~/.zshrc.d/super.zsh
 benchmark ~/.zshrc.d/alias.zsh
 benchmark ~/.zshrc.d/functions.zsh
-benchmark ~/.zshrc.d/prompt.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh
 

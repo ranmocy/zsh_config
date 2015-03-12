@@ -12,6 +12,10 @@ alias grep='grep --colour=auto' #coreutils or linux
 alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade && brew cleanup'
 alias g='git'
+alias ga='g a'
+alias gb='g b'
+alias gl='g l'
+alias gs='g s'
 alias t='trash'
 alias ta='tmux -CC attach'
 alias tc='tmux -CC'
@@ -43,3 +47,5 @@ alias topcpu='top -F -R -o cpu'
 alias topmem='top -F -R -o reg'
 alias tree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias record="ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg"
+alias sha1="shasum -a 1"
+alias sha256="shasum -a 256"

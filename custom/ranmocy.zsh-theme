@@ -1,4 +1,20 @@
+# Two lines promot, with RVM and Git support
+# Better with my iTerm color scheme
+#
+# Mar 2015, Ranmocy
+
+
 function precmd {
+
+    # Git info.
+    ZSH_THEME_GIT_PROMPT_PREFIX="$PR_GREEN"
+    ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOUR"
+    ZSH_THEME_GIT_PROMPT_DIRTY=" %{$PR_RED%}x"
+    ZSH_THEME_GIT_PROMPT_CLEAN=""
+    ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$PR_YELLOW%}↓"
+    ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$PR_YELLOW%}↑"
+    ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
+
 
     # PROMPTS
     PR_TEMPLATE="--()()--"
@@ -9,7 +25,8 @@ function precmd {
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 
-    PR_GIT=`current-git-branch-status`
+    # PR_GIT="$(git_prompt_info)"
+    PR_GIT="$(git_prompt_info)$(git_remote_status)"
     PR_MOE="(～￣▽￣)～"
     PR_TIME="%D{%H:%M:%S %b %d}"
 
@@ -78,12 +95,12 @@ setprompt () {
 
     autoload colors zsh/terminfo
     if [[ "$terminfo[colors]" -ge 8 ]]; then
-          colors
+        colors
     fi
     for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
-          eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-          eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
-          (( count = $count + 1 ))
+        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+        eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
+        (( count = $count + 1 ))
     done
     PR_NO_COLOUR="%{$terminfo[sgr0]%}"
 
@@ -106,24 +123,24 @@ setprompt () {
     # Decide if we need to set titlebar text.
 
     case $TERM in
-          xterm*)
-              PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
-              ;;
-          screen)
-              PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
-              ;;
-          *)
-              PR_TITLEBAR=''
-              ;;
+        xterm*)
+            PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+            ;;
+        screen)
+            PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
+            ;;
+        *)
+            PR_TITLEBAR=''
+            ;;
     esac
 
 
     ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
-          PR_STITLE=$'%{\ekzsh\e\\%}'
+        PR_STITLE=$'%{\ekzsh\e\\%}'
     else
-          PR_STITLE=''
+        PR_STITLE=''
     fi
 
 
@@ -136,7 +153,8 @@ setprompt () {
     UR_corner="$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT"
     LR_corner="$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
 
-    PROMPT='$PR_SET_CHARSET\
+    PROMPT='\
+$PR_SET_CHARSET\
 $PR_BLUE$UL_corner\
 ($PR_YELLOW$PR_PWD$PR_BLUE)\
 $PR_LIGHT_YELLOW$PR_RUBY\
@@ -158,10 +176,11 @@ $PR_BLUE($PR_YELLOW$PR_TIME$PR_BLUE)\
 $LR_corner\
 $PR_NO_COLOUR'
 
-    PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
+    PS2='\
+$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
 $PR_LIGHT_GREEN%_$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR '
+$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR'
 }
 
 setprompt

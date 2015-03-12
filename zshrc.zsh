@@ -1,6 +1,6 @@
-# Switch for benchmark
-# BENCHMARK=true
+# Switch for benchmark, Coreutils path should be setted up
 # PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+# BENCHMARK=true
 
 if [[ $BENCHMARK == true ]]; then
     BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`
@@ -17,8 +17,8 @@ benchmark(){
 }
 
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.zshrc.d/oh-my-zsh
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.zshrc.d/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -26,32 +26,56 @@ ZSH=$HOME/.zshrc.d/oh-my-zsh
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="robbyrussell"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
+# Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Comment this out to disable bi-weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
+# Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# Uncomment following line if you want to disable autosetting terminal title.
+# Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=$HOME/.zshrc.d
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=()
+
+# User configuration
+
+# Path
+# if [ -x /usr/libexec/path_helper ]; then
+#     eval `/usr/libexec/path_helper -s`
+# fi
+# PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+export PATH=$HOME/bin:$PATH
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+fpath=(~/.zshrc.d/completions $fpath)
 
 benchmark $ZSH/oh-my-zsh.sh
 benchmark ~/.zshrc.d/super.zsh

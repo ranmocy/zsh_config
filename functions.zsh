@@ -1,5 +1,3 @@
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 wiki() { dig +short txt $1.wp.dg.cx; }
 
 # ls after cd

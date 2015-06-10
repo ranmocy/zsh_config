@@ -3,6 +3,9 @@
 #
 # Mar 2015, Ranmocy
 
+function pwd_prompt_info {
+    echo "%~"
+}
 
 function precmd {
 
@@ -19,7 +22,7 @@ function precmd {
     # PROMPTS
     PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
-    PR_PWD="%~"
+    PR_PWD="$(pwd_prompt_info)"
     # PR_RUBY="(`current-rbenv-info`)"
     PR_RUBY=`rvm_prompt_info`
     PR_USER="%(!.%SROOT%s.%n)"

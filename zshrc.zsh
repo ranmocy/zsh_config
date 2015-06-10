@@ -83,6 +83,9 @@ benchmark ~/.zshrc.d/alias.zsh
 benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh
+if [ -f ~/.bash_aliases ]; then
+  benchmark ~/.zshrc.d/sensitive.zsh
+fi
 
 if [[ $BENCHMARK == true ]]; then
   BENCHMARK_TOTAL_END_TIME=`date +%s.%N`

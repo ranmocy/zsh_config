@@ -12,6 +12,9 @@ export HTTP_OR_HTTPS="http"
 export MONGOID_HOST="localhost"
 export MONGOID_DATABASE="git_cafe_development"
 
+# Python
+export PYTHONSTARTUP=$HOME/.pythonstartup
+
 # Boost Ruby
 export RUBY_GC_HEAP_INIT_SLOTS=1000000 # 1M
 export RUBY_GC_HEAP_FREE_SLOTS=500000  # 0.5M

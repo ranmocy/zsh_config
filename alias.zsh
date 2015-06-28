@@ -10,8 +10,8 @@ alias ll="ls -al"
 alias grep='grep --colour=auto' #coreutils or linux
 
 alias b='brew'
-alias bup='brew update && brew outdated && brew upgrade && brew cleanup'
-alias g='git'
+alias bup='brew update && brew outdated && brew upgrade --all && brew cleanup'
+# alias g='git'
 alias ga='g a'
 alias gb='g b'
 alias gl='g l'

@@ -149,7 +149,6 @@ setprompt () {
 
     ###
     # Finally, the prompt.
-#$PR_STITLE${(e)PR_TITLEBAR}\
 
     UL_corner="$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT"
     LL_corner="$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT"
@@ -157,6 +156,7 @@ setprompt () {
     LR_corner="$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
 
     PROMPT='\
+$PR_STITLE${(e)PR_TITLEBAR}\
 $PR_SET_CHARSET\
 $PR_BLUE$UL_corner\
 ($PR_YELLOW$PR_PWD$PR_BLUE)\

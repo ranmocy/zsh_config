@@ -69,9 +69,9 @@ plugins=()
 # User configuration
 
 # Path
-# if [ -x /usr/libexec/path_helper ]; then
-#     eval `/usr/libexec/path_helper -s`
-# fi
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=$HOME/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
@@ -83,7 +83,7 @@ benchmark ~/.zshrc.d/alias.zsh
 benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh
-if [ -f ~/.bash_aliases ]; then
+if [ -f ~/.zshrc.d/sensitive.zsh ]; then
   benchmark ~/.zshrc.d/sensitive.zsh
 fi
 

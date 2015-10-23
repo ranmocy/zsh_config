@@ -147,5 +147,6 @@ function httpserver() {
     if [[ -z $1 ]]; then
         port="8000"
     fi
-    python -m SimpleHTTPServer $port >/dev/null 2>&1 & (open http://localhost:$port && fg)
+    echo "Server will be started at http://localhost:$port"
+    python -m SimpleHTTPServer $port 2>/dev/null &
 }

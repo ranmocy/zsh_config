@@ -143,10 +143,15 @@ function telephone() {
 }
 
 function httpserver() {
+    local host=$2;
     local port=$1;
     if [[ -z $1 ]]; then
         port="8000"
     fi
-    echo "Server will be started at http://localhost:$port"
-    python -m SimpleHTTPServer $port 2>/dev/null &
+    if [[ -z $2 ]]; then
+        host='coolol.com'
+    fi
+    echo "Server will be started at http://$host:$port"
+    python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
+    #python -m SimpleHTTPServer $port 2>/dev/null &
 }

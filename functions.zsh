@@ -153,5 +153,4 @@ function httpserver() {
     fi
     echo "Server will be started at http://$host:$port"
     python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
-    #python -m SimpleHTTPServer $port 2>/dev/null &
 }

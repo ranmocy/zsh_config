@@ -2,8 +2,7 @@
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    # export EDITOR="s -w"
-    export EDITOR="atom -n -w"
+    export EDITOR="s -w"
 fi
 
 # GitCafe ENV

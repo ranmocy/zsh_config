@@ -6,15 +6,6 @@ function chpwd() {
     l
 }
 
-# replace strings in folder
-function replace_all() {
-    if [ ! -z $1 ] || [ ! -z $2 ]; then
-        echo "USAGE: replace_all ORIGINAL_STRING NEW_STRING"
-        exit 127
-    fi
-    grep -rl "$1" ./ | xargs sed -i "s/$1/$2/g"
-}
-
 # Rbenv
 # current-rbenv-info() {
 #   local version=$(rbenv version-name)

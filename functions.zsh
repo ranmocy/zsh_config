@@ -1,4 +1,4 @@
-wiki() { dig +short txt $1.wp.dg.cx; }
+function wiki() { dig +short txt $1.wp.dg.cx; }
 
 # ls after cd
 function chpwd() {
@@ -77,20 +77,14 @@ function replace_all() {
 #     fi
 # }
 
-sudo-command-line () {
-    [[ -z $BUFFER ]] && zle up-history
-    [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
-    zle end-of-line                 #光标移动到行末
-}
-
 # CPU MEM info
-cpu() {
+function cpu() {
     local num=10;
     if [ ! -z $1 ]; then num=$1; fi
     ans=`ps -eo pcpu,pid,args | sort -r | head -$num | sed '/%CPU/d' | sed 's/\/Applications\///g' | sed 's/\/Utilities\///g' | sed 's/\/Contents.*//g' | sed 's/\/System\/Library\/Frameworks\///g'| sed 's/\.framework.*/\.framework/g'| sed 's/\/System\/Library\/PrivateFrameworks\///g'`
     echo $ans
 }
-mem() {
+function mem() {
     local num=10;
     if [ ! -z $1 ]; then num=$1; fi
     ans=`ps -eo pmem,pid,args | sort -r | head -$num | sed '/%MEM/d' | sed 's/\/Applications\///g' | sed 's/\/Utilities\///g' | sed 's/\/Contents.*//g' | sed 's/\/System\/Library\/Frameworks\///g'| sed 's/\.framework.*/\.framework/g'| sed 's/\/System\/Library\/PrivateFrameworks\///g'`
@@ -98,12 +92,12 @@ mem() {
 }
 
 # Pretty UI
-mountt() {
+function mountt() {
     ans=`(echo "DEVICE PATH TYPE FLAGS" && mount )| sed 's/map /map::/g' | sed 's/on//g' | column -t`
     echo $ans
 }
 
-listtask() {
+function listtask() {
     if [ -z $1 ]; then
         echo "USAGE: listtask PROGRAM_NAME"
         return 127
@@ -111,7 +105,7 @@ listtask() {
     ps aux | grep -v grep | grep -i $1
 }
 
-listkill() {
+function listkill() {
     if [ -z $1 ]; then
         echo "USAGE: listkill PROGRAM_NAME [SIGNAL]"
         return 127
@@ -127,7 +121,7 @@ listkill() {
     listtask $1 | awk '{print $2}' | xargs kill -$sig
 }
 
-bak() {
+function bak() {
     if [[ -z $1 ]]; then
         echo "USAGE: bak FILENAME"
         echo "This will cp FILENAME to FILENAME.bak"

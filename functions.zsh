@@ -6,6 +6,11 @@ function chpwd() {
     l
 }
 
+# replace strings in folder
+function replace_all() {
+    grep -rl "$1" ./ | xargs sed -i "s/$1/$2/g"
+}
+
 # Rbenv
 # current-rbenv-info() {
 #   local version=$(rbenv version-name)

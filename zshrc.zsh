@@ -73,7 +73,7 @@ if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
 PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin_corp:$HOME/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fpath=(~/.zshrc.d/completions $fpath)
 
@@ -83,8 +83,8 @@ benchmark ~/.zshrc.d/alias.zsh
 benchmark ~/.zshrc.d/functions.zsh
 benchmark ~/.zshrc.d/auto_completion.zsh
 benchmark ~/.zshrc.d/z/z.sh
-if [ -f ~/.zshrc.d/sensitive.zsh ]; then
-  benchmark ~/.zshrc.d/sensitive.zsh
+if [ -f ~/bin_corp/sensitive.zsh ]; then
+  benchmark ~/bin_corp/sensitive.zsh
 fi
 
 if [[ $BENCHMARK == true ]]; then

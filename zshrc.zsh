@@ -9,13 +9,12 @@ fi
 benchmark(){
     if [[ $BENCHMARK == true ]]; then
         start_time=`date +%s.%N`
-        source $1
-        echo $1:"\t"$(( `date +%s.%N` - $start_time ))
+        $@
+        echo $@:"\t"$(( `date +%s.%N` - $start_time ))
     else
-        source $1
+        $@
     fi
 }
-
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.zshrc.d/oh-my-zsh
@@ -77,14 +76,14 @@ export PATH=$HOME/bin_corp:$HOME/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fpath=(~/.zshrc.d/completions $fpath)
 
-benchmark $ZSH/oh-my-zsh.sh
-benchmark ~/.zshrc.d/super.zsh
-benchmark ~/.zshrc.d/alias.zsh
-benchmark ~/.zshrc.d/functions.zsh
-benchmark ~/.zshrc.d/auto_completion.zsh
-benchmark ~/.zshrc.d/z/z.sh
+benchmark source $ZSH/oh-my-zsh.sh
+benchmark source ~/.zshrc.d/super.zsh
+benchmark source ~/.zshrc.d/alias.zsh
+benchmark source ~/.zshrc.d/functions.zsh
+benchmark source ~/.zshrc.d/auto_completion.zsh
+benchmark source ~/.zshrc.d/z/z.sh
 if [ -f ~/bin_corp/sensitive.zsh ]; then
-  benchmark ~/bin_corp/sensitive.zsh
+  benchmark source ~/bin_corp/sensitive.zsh
 fi
 
 if [[ $BENCHMARK == true ]]; then

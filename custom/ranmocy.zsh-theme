@@ -7,24 +7,17 @@ function pwd_prompt_info {
     echo "%~"
 }
 
-function precmd {
+function title_prompt_info {
+    echo "%(!.-=*[ROOT]*=- | .)%n@%m:%~ | %y"
+}
 
-    # Git info.
-    ZSH_THEME_GIT_PROMPT_PREFIX="$PR_GREEN"
-    ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOUR"
-    ZSH_THEME_GIT_PROMPT_DIRTY=" %{$PR_RED%}x"
-    ZSH_THEME_GIT_PROMPT_CLEAN=""
-    ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$PR_YELLOW%}↓"
-    ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$PR_YELLOW%}↑"
-    ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
-
-
+function prompt_preloading {
     # PROMPTS
     PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
     PR_PWD="$(pwd_prompt_info)"
     # PR_RUBY="(`current-rbenv-info`)"
-    PR_RUBY=`rvm_prompt_info`
+    # PR_RUBY=`rvm_prompt_info`
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 
@@ -32,7 +25,9 @@ function precmd {
     PR_GIT="$(git_prompt_info)$(git_remote_status)"
     PR_MOE="(～￣▽￣)～"
     PR_TIME="%D{%H:%M:%S %b %d}"
+}
 
+function prompt_calculation {
     # Calc sizes
     local TERMWIDTH=$(($COLUMNS-1))
     local templatesize=${#${(%):-${PR_TEMPLATE}}}
@@ -75,6 +70,20 @@ function precmd {
         PR_MOE=""
         PR_GIT="%$(($TERMWIDTH3))>...>$PR_GIT%<<"
     fi
+}
+
+function precmd {
+    # Config Git Prompt
+    ZSH_THEME_GIT_PROMPT_PREFIX="$PR_GREEN"
+    ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOUR"
+    ZSH_THEME_GIT_PROMPT_DIRTY=" %{$PR_RED%}x"
+    ZSH_THEME_GIT_PROMPT_CLEAN=""
+    ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$PR_YELLOW%}↓"
+    ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$PR_YELLOW%}↑"
+    ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
+
+    benchmark prompt_preloading
+    benchmark prompt_calculation
 }
 
 setopt extended_glob
@@ -127,10 +136,10 @@ setprompt () {
 
     case $TERM in
         xterm*)
-            PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+            PR_TITLEBAR=$'%{\e]0;$(title_prompt_info)\a%}'
             ;;
         screen)
-            PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
+            PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~  | %y\e\\%}'
             ;;
         *)
             PR_TITLEBAR=''

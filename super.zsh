@@ -42,9 +42,6 @@ export RUBY_GC_HEAP_GROWTH_MAX_SLOTS=10000000 # 10M
 export RUBY_GC_MALLOC_LIMIT_MAX=1000000000    # 1G
 export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.1
 
-export PATH=$PATH:$HOME/.rvm/bin
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # Highlight command
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

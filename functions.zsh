@@ -6,6 +6,24 @@ function chpwd() {
     l
 }
 
+function nvm() {
+    if [ -s "$HOME/.nvm/nvm.sh" ]; then
+        unset -f nvm
+        export NVM_DIR="$HOME/.nvm"
+        source "$NVM_DIR/nvm.sh"
+        nvm # call real function
+    fi
+}
+
+function rvm() {
+    if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+        unset -f rvm
+        export PATH=$HOME/.rvm/bin:$PATH
+        source "$HOME/.rvm/scripts/rvm"
+        rvm # call real script
+    fi
+}
+
 # Rbenv
 # current-rbenv-info() {
 #   local version=$(rbenv version-name)

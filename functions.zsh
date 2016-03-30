@@ -148,3 +148,17 @@ function httpserver() {
     echo "Server will be started at http://$host:$port"
     python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
 }
+
+function replaceall() {
+    if [[ -z $3 ]]; then
+        echo "USAGE: $0 FILE_PATTERN OLD_PATTERN NEW_STRING"
+        echo "This will replace lines matches OLD_PATTERN to NEW_STRING in all files matches FILE_PATTERN."
+        return 127
+    fi
+
+    local file_pattern=$1;
+    local old_pattern=$2;
+    local new_string=$3;
+
+    grep -rl "$2" "$1" | xargs sed -i "s/$2/$3/g"
+}

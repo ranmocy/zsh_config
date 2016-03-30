@@ -16,14 +16,18 @@ function prompt_preloading {
     PR_TEMPLATE="--()()--"
     PR_FILLBAR=""
     PR_PWD="$(pwd_prompt_info)"
-    # PR_RUBY="(`current-rbenv-info`)"
-    # PR_RUBY=`rvm_prompt_info`
+    if [[ -n "$rvm_path" ]]; then
+        PR_RUBY=`rvm_prompt_info`
+    elif [[ -n "$rbenv_path" ]]; then
+        PR_RUBY="(`current-rbenv-info`)"
+    fi
     PR_USER="%(!.%SROOT%s.%n)"
     PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
 
     # PR_GIT="$(git_prompt_info)"
     PR_GIT="$(git_prompt_info)$(git_remote_status)"
-    PR_MOE="(～￣▽￣)～"
+    # PR_MOE="(～￣▽￣)～"
+    PR_MOE="(～￣$(echo -e "\xe2\x96\xbd\x0a")￣)～"
     PR_TIME="%D{%H:%M:%S %b %d}"
 }
 

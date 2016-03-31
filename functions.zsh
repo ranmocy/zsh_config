@@ -180,3 +180,8 @@ function replaceall() {
 
     grep -rl "$2" "$1" | xargs sed -i "s/$2/$3/g"
 }
+
+function logapp() {
+    local package=$1;
+    adb logcat | grep `adb shell ps | grep $package | cut -c10-15`
+}

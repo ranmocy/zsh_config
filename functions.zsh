@@ -11,16 +11,20 @@ function nvm() {
         unset -f nvm
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
-        nvm # call real function
+        nvm $@ # call real function
+    else
+        echo "NVM is not installed!"
     fi
 }
 
 function rvm() {
-    if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+    if [ -s "$HOME/.rvm/scripts/rvm" ]; then
         unset -f rvm
         export PATH=$HOME/.rvm/bin:$PATH
         source "$HOME/.rvm/scripts/rvm"
-        rvm # call real script
+        rvm $@ # call real script
+    else
+        echo "RVM is not installed!"
     fi
 }
 

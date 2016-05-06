@@ -22,10 +22,6 @@ alias ec="emacsclient -c --no-wait -a 'vim'"
 alias lt='listtask'
 alias lk='listkill'
 
-alias mp='mosh gitcafe@gitcafe.com'
-alias ms='mosh gitcafe@gitcafe.staging'
-alias sshproxy='ssh -TfnND 4444 gitcafe@gitcafe.staging'
-
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d assign="$HOME/Codespace/Assignments/"
 hash -d code="$HOME/Codespace/"
@@ -34,7 +30,6 @@ hash -d test="$HOME/Codespace/Tests/"
 hash -d hosted="$HOME/Codespace/Hosted/"
 hash -d usaco="$HOME/Codespace/USACO/"
 hash -d brain="$HOME/Codespace/Brain/"
-hash -d gitcafe="$HOME/Codespace/Works/GitCafe/"
 hash -d guard-rails="$HOME/Codespace/Hosted/guard-rails/"
 
 # zsh alias

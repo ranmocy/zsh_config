@@ -23,9 +23,6 @@ export ZSH=$HOME/.zshrc.d/oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="ranmocy"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
-
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 

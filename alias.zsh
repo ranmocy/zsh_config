@@ -1,13 +1,10 @@
 # System Alias
-# alias ls="ls -G -F" #macos
-alias ls="ls --color=auto -hF" #coreutils or linux
 alias l="ls -l"
 alias la="ls -a"
 alias ll="ls -al"
 #alias cp='cp -i'
 #alias mv='mv -i'
 #alias rm='rm -i'
-alias grep='grep --colour=auto' #coreutils or linux
 
 alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade --all && brew cleanup'

@@ -1,5 +1,3 @@
-# Switch for benchmark, Coreutils path should be setted up
-# PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 # BENCHMARK=true
 
 if [[ $BENCHMARK == true ]]; then
@@ -71,9 +69,7 @@ plugins=()
 if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
-PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export PATH=$HOME/bin_corp:$HOME/bin:$PATH
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fpath=(~/.zshrc.d/completions $fpath)
 
 benchmark source $ZSH/oh-my-zsh.sh

@@ -5,12 +5,10 @@ else
     export EDITOR="s -w"
 fi
 
-# GitCafe ENV
-# export RAILS_ENV="development"
-export GITCAFE_SERVER="localhost"
-export HTTP_OR_HTTPS="http"
-export MONGOID_HOST="localhost"
-export MONGOID_DATABASE="git_cafe_development"
+# Color utils
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+# export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx # black background
 
 # Python
 export PYTHONSTARTUP=$HOME/.pythonstartup

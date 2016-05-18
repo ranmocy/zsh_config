@@ -7,7 +7,7 @@ alias ll="ls -al"
 #alias rm='rm -i'
 
 alias b='brew'
-alias bup='brew update && brew outdated && brew upgrade --all && brew cleanup'
+alias bup='brew update && brew outdated && brew upgrade --all && brew cleanup && brew cask cleanup'
 alias g='git'
 alias ga='g a'
 alias gb='g b'

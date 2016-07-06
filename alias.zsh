@@ -8,6 +8,7 @@ alias ll="ls -al"
 
 alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade --all && brew cleanup && brew cask cleanup'
+alias up='configs_upgrade && bup'
 alias g='git'
 alias ga='g a'
 alias gb='g b'

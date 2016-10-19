@@ -51,7 +51,7 @@ plugins=()
 if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
-export PATH=$HOME/bin_corp:$HOME/bin:$PATH
+export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
 fpath=($HOME/.zshrc.d/completions $fpath)
 
 # Loading modules

@@ -22,6 +22,7 @@ alias et="emacsclient -t -a 'vim'"
 alias ec="emacsclient -c --no-wait -a 'vim'"
 alias lt='listtask'
 alias lk='listkill'
+alias tzh='trans :zh'
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d assign="$HOME/Codespace/Assignments/"

@@ -182,7 +182,8 @@ function replaceall() {
     local old_pattern=$2;
     local new_string=$3;
 
-    grep -rl "$2" "$1" | xargs sed -i "s/$2/$3/g"
+    find . -type f -name "$1" -exec sed -i "s/$2/$3/g" {} +
+    # grep -rl "$2" "$1" | xargs sed -i "s/$2/$3/g"
 }
 
 function logapp() {

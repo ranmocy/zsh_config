@@ -27,7 +27,8 @@ function prompt_preloading {
     # PR_GIT="$(git_prompt_info)"
     PR_GIT="$(git_prompt_info)$(git_remote_status)"
     # PR_MOE="(～￣▽￣)～"
-    PR_MOE="(～￣$(echo -e "\xe2\x96\xbd\x0a")￣)～"
+    # Use `echo -n ▽ | hexdump` to get the escaped hex code
+    PR_MOE="($(echo -e "\xef\xbd\x9e")$(echo -e "\xef\xbf\xa3")$(echo -e "\xe2\x96\xbd")$(echo -e "\xef\xbf\xa3"))$(echo -e "\xef\xbd\x9e")"
     PR_TIME="%D{%H:%M:%S %b %d}"
 }
 

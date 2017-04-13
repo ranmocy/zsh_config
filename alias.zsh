@@ -6,6 +6,15 @@ alias ll="ls -al"
 #alias mv='mv -i'
 #alias rm='rm -i'
 
+# define the open command
+case "$OSTYPE" in
+  darwin*)  ;;
+  cygwin*)  alias open='cygstart' ;;
+  linux*)   alias open='xdg-open' ;;
+  msys*)    alias open='start ""' ;;
+  *)        echo "Platform $OSTYPE not supported" ;;
+esac
+
 alias b='brew'
 alias bup='brew update && brew outdated && brew upgrade && brew cleanup && brew cask cleanup'
 alias up='configs_upgrade && bup'

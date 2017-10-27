@@ -4,7 +4,7 @@
 # * Mac OS X: terminal-notifier
 #
 # Usage:
-# notify message [title]
+# notify message [title] [urgency]
 
 function _notify-echo() {
   local msg
@@ -28,7 +28,8 @@ function _notify-notify-send() {
   # -i, --icon=ICON[,ICON...]         Specifies an icon filename or stock icon to display.
   # -c, --category=TYPE[,TYPE...]     Specifies the notification category.
   # -h, --hint=TYPE:NAME:VALUE        Specifies basic extra data to pass. Valid types are int, double, string and byte.
-  notify-send --urgency=normal --expire-time=1000 --app-name="$2" -- "$1" >/dev/null 2>&1
+  [[ "x$3" == "x" ]] && 3="normal"
+  notify-send --urgency="$3" --expire-time=1000 --app-name="$2" -- "$1" >/dev/null 2>&1
 }
 
 alias notify=_notify-echo

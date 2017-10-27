@@ -23,12 +23,13 @@ function _cmdnotify-preexec() {
 }
 
 function _cmdnotify-precmd() {
-  local difftime last_cmd prog
+  local difftime last_cmd notify_level prog
   if [[ -n "$TTY" && -n "$_CMDNOTIFY_EXECUTED" ]]; then
     _CMDNOTIFY_EXECUTED=""
     difftime=$(($EPOCHREALTIME-$_CMDNOTIFY_START_TIME))
     if [[ $difftime -ge $CMDNOTIFY_TIME && $TTYIDLE -ge $CMDNOTIFY_TIME ]]; then
       last_cmd=(${(Q)${(z)_CMDNOTIFY_LAST_CMD}})
+      [[ "$0" == "0" ]] && notify_level="normal" || notify_level="critical"
       # filter env vars
       for prog in $last_cmd
         [[ \
@@ -56,8 +57,10 @@ function _cmdnotify-precmd() {
       fi
 
       [[ "${CMDNOTIFY_DONT_NOTIFY[(r)$prog]}" != "$prog" ]] && \
-        notify "$_CMDNOTIFY_LAST_CMD" \
-            "'$(basename $prog)' ($time_text)"
+        notify \
+            "$_CMDNOTIFY_LAST_CMD" \
+            "'$(basename $prog)' ($time_text)" \
+            "$notify_level"
     fi
   fi
 }

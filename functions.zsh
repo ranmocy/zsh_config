@@ -168,7 +168,14 @@ function httpserver() {
         host='localhost'
     fi
     echo "Server will be started at http://$host:$port"
-    python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
+    # Python2 only
+    # python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
+
+    # Python3 only
+    # python3 -m http.server $port --bind $host
+
+    # 2 or 3
+    python -m $(python -c 'import sys; print("http.server" if sys.version_info[:2] > (2,7) else "SimpleHTTPServer")')
 }
 
 function replaceall() {

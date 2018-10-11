@@ -6,17 +6,34 @@ function chpwd() {
     l
 }
 
+function confirm() {
+    # /usr/bin/read -p "${1:- [y/N]} " response
+    read response\?"$1 [y/N] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
+
 function nvm() {
     if [ -s "$HOME/.nvm/nvm.sh" ]; then
         unset -f nvm
         export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
+        source "$NVM_DIR/bash_completion"
         nvm $@ # call real function
     else
-        echo "NVM is not installed!"
+        confirm "NVM is not installed, do you want to install?" && \
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
     fi
 }
 
+# Disable auto adding lines to my precise dotfiles
+export rvm_ignore_dotfiles=yes
 function rvm() {
     if [ -s "$HOME/.rvm/scripts/rvm" ]; then
         unset -f rvm
@@ -24,7 +41,11 @@ function rvm() {
         source "$HOME/.rvm/scripts/rvm"
         rvm $@ # call real script
     else
-        echo "RVM is not installed!"
+        confirm "RVM is not installed, do you want to install?" && \
+        (
+            type gpg && gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB;
+            curl -sSL https://get.rvm.io | bash
+         )
     fi
 }
 

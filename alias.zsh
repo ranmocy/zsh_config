@@ -17,7 +17,8 @@ esac
 
 alias b='brew'
 alias bup="brew update && brew outdated && brew upgrade && brew cask outdated && brew cask upgrade && brew cleanup"
-alias up='configs_upgrade && bup'
+alias nup="(type npm &> /dev/null) && npm -g upgrade"
+alias up='configs_upgrade && bup && nup'
 alias g='git'
 alias ga='g a'
 alias gb='g b'

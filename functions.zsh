@@ -183,7 +183,7 @@ function httpserver() {
     local host=$2;
     local port=$1;
     if [[ -z $1 ]]; then
-        port="8000"
+        port="3000"
     fi
     if [[ -z $2 ]]; then
         host='localhost'
@@ -196,7 +196,7 @@ function httpserver() {
     # python3 -m http.server $port --bind $host
 
     # 2 or 3
-    python -m $(python -c 'import sys; print("http.server" if sys.version_info[:2] > (2,7) else "SimpleHTTPServer")')
+    python -m $(python -c 'import sys; print("http.server" if sys.version_info[:2] > (2,7) else "SimpleHTTPServer")') $port --bind $host
 }
 
 function replaceall() {

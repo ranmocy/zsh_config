@@ -1,14 +1,18 @@
 # BENCHMARK=true
 
+_get_current_milliseconds(){
+    /usr/local/bin/gdate +%s.%N
+}
+
 if [[ $BENCHMARK == true ]]; then
-    BENCHMARK_TOTAL_BEGIN_TIME=`date +%s.%N`
+    BENCHMARK_TOTAL_BEGIN_TIME=`_get_current_milliseconds`
 fi
 
 benchmark(){
     if [[ $BENCHMARK == true ]]; then
-        start_time=`date +%s.%N`
+        start_time=`_get_current_milliseconds`
         $@
-        echo $@:"\t"$(( `date +%s.%N` - $start_time ))
+        echo $@:"\t"$(( `_get_current_milliseconds` - $start_time ))
     else
         $@
     fi
@@ -35,7 +39,7 @@ DISABLE_AUTO_UPDATE="true"
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -83,7 +87,7 @@ if [ -f $HOME/bin_corp/sensitive.zsh ]; then
 fi
 
 if [[ $BENCHMARK == true ]]; then
-    BENCHMARK_TOTAL_END_TIME=`date +%s.%N`
+    BENCHMARK_TOTAL_END_TIME=`_get_current_milliseconds`
     BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
     echo Total: $BENCHMARK_TOTAL_TIME
 fi

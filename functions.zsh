@@ -156,7 +156,7 @@ function listkill() {
     fi
 
     echo "kill $1 with signal $sig."
-    (listtask $1 | awk '{print $2}' | xargs kill -$sig) && listtask $1
+    (listtask $1 | awk '{print $2}' | xargs kill -s $sig) && listtask $1
 }
 
 function bak() {

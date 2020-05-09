@@ -20,15 +20,16 @@ function confirm() {
 }
 
 function nvm() {
-    if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    if [ -s "$NVM_DIR/nvm.sh" ]; then
         unset -f nvm
-        export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
         nvm $@ # call real function
     else
         confirm "NVM is not installed, do you want to install?" && \
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+        mkdir -p "$NVM_DIR" && \
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
     fi
 }
 

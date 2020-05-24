@@ -69,10 +69,13 @@ plugins=(base notify cmdnotify nvm)
 # User configuration
 
 # Path
-if [ -x /usr/libexec/path_helper ]; then
-    eval `/usr/libexec/path_helper -s`
-fi
-export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
+_setup_path() {
+    if [ -x /usr/libexec/path_helper ]; then
+        eval `/usr/libexec/path_helper -s`
+    fi
+    export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
+}
+benchmark _setup_path
 
 # Loading modules
 if [ ! -f $ZSH/oh-my-zsh.sh ]; then

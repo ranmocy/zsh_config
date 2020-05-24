@@ -10,9 +10,6 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 # export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx # black background
 
-# Python
-export PYTHONSTARTUP=$HOME/.pythonstartup
-
 # History
 export HISTSIZE=10000 #历史纪录条目数量
 export SAVEHIST=10000 #注销后保存的历史纪录条目数量

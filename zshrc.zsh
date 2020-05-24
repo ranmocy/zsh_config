@@ -53,7 +53,7 @@ ZSH_CUSTOM=$HOME/.zshrc.d/custom
 # Custom plugins may be added to $HOME/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(notify cmdnotify nvm)
+plugins=(confirm notify cmdnotify nvm)
 
 # User configuration
 

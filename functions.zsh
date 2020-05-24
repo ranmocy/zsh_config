@@ -19,20 +19,6 @@ function confirm() {
     esac
 }
 
-function nvm() {
-    export NVM_DIR="$HOME/.nvm"
-    if [ -s "$NVM_DIR/nvm.sh" ]; then
-        unset -f nvm
-        source "$NVM_DIR/nvm.sh"
-        source "$NVM_DIR/bash_completion"
-        nvm $@ # call real function
-    else
-        confirm "NVM is not installed, do you want to install?" && \
-        mkdir -p "$NVM_DIR" && \
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    fi
-}
-
 # Disable auto adding lines to my precise dotfiles
 export rvm_ignore_dotfiles=yes
 function rvm() {

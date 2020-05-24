@@ -50,8 +50,8 @@ WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 # zsh-mime-setup
 
 #[Esc][h] short man
-alias run-help >&/dev/null && unalias run-help
-autoload run-help
+# alias run-help >&/dev/null && unalias run-help
+# autoload run-help
 
 # Double-ESC for Calculator
 # arith-eval-echo() {

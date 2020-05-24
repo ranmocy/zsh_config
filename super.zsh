@@ -61,6 +61,11 @@ WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 # zle -N arith-eval-echo
 # bindkey "\e\e" arith-eval-echo
 
+# ls after cd
+chpwd() {
+    l
+}
+
 # auto fillin cd
 user-complete () {
     case $BUFFER in

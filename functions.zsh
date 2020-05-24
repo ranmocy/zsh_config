@@ -1,11 +1,5 @@
 function wiki() { dig +short txt $1.wp.dg.cx; }
 
-# ls after cd
-function chpwd() {
-    # emulate -L zsh
-    l
-}
-
 # Disable auto adding lines to my precise dotfiles
 export rvm_ignore_dotfiles=yes
 function rvm() {

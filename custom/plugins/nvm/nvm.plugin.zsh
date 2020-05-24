@@ -3,8 +3,6 @@
 # Dependence:
 # * plugin confirm
 
-autoload -U add-zsh-hook
-
 nvm() {
     export NVM_DIR="$HOME/.nvm"
     if [ -s "$NVM_DIR/nvm.sh" ]; then
@@ -52,5 +50,6 @@ load-nvmrc() {
   fi
 }
 
+autoload -U add-zsh-hook
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc

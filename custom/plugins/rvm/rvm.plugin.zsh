@@ -1,4 +1,7 @@
 # RVM, lazy loaded
+#
+# Dependence:
+# * plugin base
 
 function rvm() {
     # Boost Ruby

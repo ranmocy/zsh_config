@@ -1,7 +1,7 @@
 # NVM, lazy loaded
 #
 # Dependence:
-# * plugin confirm
+# * plugin base
 
 nvm() {
     export NVM_DIR="$HOME/.nvm"

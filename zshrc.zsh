@@ -63,7 +63,7 @@ ZSH_CUSTOM=$HOME/.zshrc.d/custom
 # Custom plugins may be added to $HOME/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(confirm notify cmdnotify nvm)
+plugins=(base notify cmdnotify nvm)
 # plugins+=(rvm)
 
 # User configuration
@@ -87,9 +87,6 @@ if [ ! -f $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 fi
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.zshrc.d/super.zsh
-source $HOME/.zshrc.d/alias.zsh
-source $HOME/.zshrc.d/functions.zsh
 source $HOME/.zshrc.d/auto_completion.zsh
 source $HOME/.zshrc.d/z/z.sh
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

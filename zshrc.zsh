@@ -1,22 +1,32 @@
 # BENCHMARK=true
 
-_get_current_milliseconds(){
-    /usr/local/bin/gdate +%s.%N
-}
-
 if [[ $BENCHMARK == true ]]; then
-    BENCHMARK_TOTAL_BEGIN_TIME=`_get_current_milliseconds`
-fi
+    _get_current_milliseconds(){
+        # /usr/local/bin/gdate +%s.%N
+        date +%s%N
+    }
 
-benchmark(){
-    if [[ $BENCHMARK == true ]]; then
+    BENCHMARK_TOTAL_BEGIN_TIME=`_get_current_milliseconds`
+
+    _diff_current_milliseconds() {
+        echo "$(( (`_get_current_milliseconds` - $1)/1000000 ))"
+    }
+
+    benchmark(){
         start_time=`_get_current_milliseconds`
         $@
-        echo $@:"\t"$(( `_get_current_milliseconds` - $start_time ))
-    else
+        echo $@:"\t`_diff_current_milliseconds $start_time`ms"
+    }
+
+    # Hijack source to measure all parts in oh-my-zsh
+    source(){
+        benchmark . $@
+    }
+else
+    benchmark(){
         $@
-    fi
-}
+    }
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.zshrc.d/oh-my-zsh
@@ -54,6 +64,7 @@ ZSH_CUSTOM=$HOME/.zshrc.d/custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(confirm notify cmdnotify nvm)
+# plugins+=(rvm)
 
 # User configuration
 
@@ -75,19 +86,17 @@ if [ ! -f $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
     git clone 'git://github.com/zsh-users/zsh-syntax-highlighting.git' $HOME/.zshrc.d/zsh-syntax-highlighting
 fi
 
-benchmark source $ZSH/oh-my-zsh.sh
-benchmark source $HOME/.zshrc.d/super.zsh
-benchmark source $HOME/.zshrc.d/alias.zsh
-benchmark source $HOME/.zshrc.d/functions.zsh
-benchmark source $HOME/.zshrc.d/auto_completion.zsh
-benchmark source $HOME/.zshrc.d/z/z.sh
-benchmark source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/oh-my-zsh.sh
+source $HOME/.zshrc.d/super.zsh
+source $HOME/.zshrc.d/alias.zsh
+source $HOME/.zshrc.d/functions.zsh
+source $HOME/.zshrc.d/auto_completion.zsh
+source $HOME/.zshrc.d/z/z.sh
+source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f $HOME/bin_corp/sensitive.zsh ]; then
-    benchmark source $HOME/bin_corp/sensitive.zsh
+    source $HOME/bin_corp/sensitive.zsh
 fi
 
 if [[ $BENCHMARK == true ]]; then
-    BENCHMARK_TOTAL_END_TIME=`_get_current_milliseconds`
-    BENCHMARK_TOTAL_TIME=$(( $BENCHMARK_TOTAL_END_TIME - $BENCHMARK_TOTAL_BEGIN_TIME ))
-    echo Total: $BENCHMARK_TOTAL_TIME
+    echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
 fi

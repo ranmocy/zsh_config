@@ -73,7 +73,6 @@ if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
 export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
-fpath=($HOME/.zshrc.d/completions $fpath)
 
 # Loading modules
 if [ ! -f $ZSH/oh-my-zsh.sh ]; then
@@ -87,7 +86,6 @@ if [ ! -f $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; 
 fi
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.zshrc.d/auto_completion.zsh
 source $HOME/.zshrc.d/z/z.sh
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f $HOME/bin_corp/sensitive.zsh ]; then

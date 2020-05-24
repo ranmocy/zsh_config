@@ -1,34 +1,5 @@
 function wiki() { dig +short txt $1.wp.dg.cx; }
 
-# Disable auto adding lines to my precise dotfiles
-export rvm_ignore_dotfiles=yes
-function rvm() {
-    if [ -s "$HOME/.rvm/scripts/rvm" ]; then
-        unset -f rvm
-        export PATH=$HOME/.rvm/bin:$PATH
-        source "$HOME/.rvm/scripts/rvm"
-        rvm $@ # call real script
-    else
-        confirm "RVM is not installed, do you want to install?" && \
-        (
-            type gpg && gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB;
-            curl -sSL https://get.rvm.io | bash
-         )
-    fi
-}
-
-# Rbenv
-# current-rbenv-info() {
-#   local version=$(rbenv version-name)
-#   # local gemset=$(rbenv gemset active 2&>/dev/null | sed -e ":a" -e '$ s/\n/+/gp;N;b a' | head -n1)
-#   local gemset=$(rbenv gemset active 2&>/dev/null | head -n1)
-#   if [ -z "$gemset" ]; then
-#     echo "$version"
-#   else
-#     echo "$version@$gemset"
-#   fi
-# }
-
 # Git
 # current-git-branch-status () {
 #     update-current-git-info

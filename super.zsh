@@ -13,14 +13,6 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # Python
 export PYTHONSTARTUP=$HOME/.pythonstartup
 
-# Boost Ruby
-export RUBY_GC_HEAP_INIT_SLOTS=1000000 # 1M
-export RUBY_GC_HEAP_FREE_SLOTS=500000  # 0.5M
-export RUBY_GC_HEAP_GROWTH_FACTOR=1.1
-export RUBY_GC_HEAP_GROWTH_MAX_SLOTS=10000000 # 10M
-export RUBY_GC_MALLOC_LIMIT_MAX=1000000000    # 1G
-export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.1
-
 # History
 export HISTSIZE=10000 #历史纪录条目数量
 export SAVEHIST=10000 #注销后保存的历史纪录条目数量
@@ -32,17 +24,8 @@ setopt AUTO_PUSHD #启用 cd 命令的历史纪录，cd -[TAB]进入历史路径
 setopt PUSHD_IGNORE_DUPS #相同的历史路径只保留一个
 setopt HIST_IGNORE_SPACE #在命令前添加空格，不将此命令添加到纪录文件中
 
-# Boost Ruby
-export RUBY_GC_HEAP_INIT_SLOTS=1000000 # 1M
-export RUBY_GC_HEAP_FREE_SLOTS=500000  # 0.5M
-export RUBY_GC_HEAP_GROWTH_FACTOR=1.1
-export RUBY_GC_HEAP_GROWTH_MAX_SLOTS=10000000 # 10M
-export RUBY_GC_MALLOC_LIMIT_MAX=1000000000    # 1G
-export RUBY_GC_MALLOC_LIMIT_GROWTH_FACTOR=1.1
-
-#==========CUSTOMS==========##
 # As a word
-WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
+export WORDCHARS='*?_-[]~=&;!#$%^(){}<>'
 
 # Extend Math [SLOW]
 # zmodload zsh/mathfunc

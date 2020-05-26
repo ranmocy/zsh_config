@@ -3,6 +3,100 @@
 #
 # Mar 2015, Ranmocy
 
+# See if we can use colors.
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
+    eval PR_$color='%{$fg_bold[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg_no_bold[${(L)color}]%}'
+done
+PR_RESET_COLOR="%{$reset_color%}"
+
+# Use Unicode to format layout
+PR_HBAR="$(echo -e "\u2500")"
+PR_ULCORNER="$(echo -e "\u250c")"
+PR_URCORNER="$(echo -e "\u2510")"
+PR_LLCORNER="$(echo -e "\u2514")"
+PR_LRCORNER="$(echo -e "\u2518")"
+PR_MOE="(～￣▽￣)～"
+# PR_MOE="ʕ•̫͡•ʔ"
+PR_SHRUG="¯\_(ツ)_/¯"
+# Use `echo -n ▽ | hexdump` to get the escaped hex code
+# PR_MOE="$(echo -e "\x28\xef\xbd\x9e\xef\xbf\xa3\xe2\x96\xbd\xef\xbf\xa3\x29\xef\xbd\x9e")"
+PR_RETURN_CODE="%(?..%{$PR_RED%}%?%{$PR_RESET_COLOR%})"
+PR_TIME="%D{%H:%M:%S %b %d}"
+
+# Config Git Prompt
+ZSH_THEME_GIT_PROMPT_PREFIX="$PR_GREEN"
+ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_RESET_COLOR"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{$PR_RED%}x"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$PR_YELLOW%}↓"
+ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$PR_YELLOW%}↑"
+ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
+
+# Decide if we need to set titlebar text.
+case $TERM in
+    xterm*)
+        PR_TITLEBAR_FORMAT=$'%{\e]0;$(title_prompt_info)\a%}'
+        PR_STITLE=''
+        ;;
+    screen)
+        PR_TITLEBAR_FORMAT=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~  | %y\e\\%}'
+        PR_STITLE=$'%{\ekzsh\e\\%}'
+        ;;
+    *)
+        PR_TITLEBAR_FORMAT=''
+        PR_STITLE=''
+        ;;
+esac
+
+# Dynamic parts placeholder
+PR_TEMPLATE1="${PR_ULCORNER}${PR_HBAR}()()${PR_HBAR}${PR_URCORNER}"
+PR_TEMPLATE2="${PR_LLCORNER}${PR_HBAR}()${PR_HBAR}>"
+PR_FILLBAR_DYNAMIC_FORMAT=""
+PR_PWD_DYNAMIC=""
+PR_USER_DYNAMIC=""
+PR_HOST_AT_DYNAMIC=""
+PR_HOST_DOMAIN_DYNAMIC=""
+PR_GIT_DYNAMIC=""
+PR_RUBY_DYNAMIC=""
+PR_MOE_DYNAMIC=""
+
+# Need this to expand parameters in the prompt template
+setopt prompt_subst
+
+# Finally, the prompt.
+PROMPT='\
+$PR_STITLE${(e)PR_TITLEBAR_FORMAT}\
+$PR_BLUE$PR_ULCORNER$PR_HBAR\
+($PR_YELLOW$PR_PWD_DYNAMIC$PR_BLUE)\
+$PR_LIGHT_YELLOW$PR_RUBY_DYNAMIC\
+$PR_BLUE${(e)PR_FILLBAR_DYNAMIC_FORMAT}\
+($PR_LIGHT_BLUE$PR_USER_DYNAMIC$PR_GREY$PR_HOST_AT_DYNAMIC$PR_GREEN$PR_HOST_DOMAIN_DYNAMIC$PR_BLUE)\
+$PR_HBAR$PR_URCORNER\
+
+$PR_LLCORNER$PR_HBAR\
+($PR_GIT_DYNAMIC$PR_BLUE)\
+$PR_HBAR\
+$PR_MOE_DYNAMIC>\
+$PR_RESET_COLOR'
+
+# display exitcode on the right when >0
+RPROMPT='\
+$PR_RETURN_CODE\
+$PR_BLUE($PR_YELLOW$PR_TIME$PR_BLUE)\
+$PR_HBAR$PR_LRCORNER\
+$PR_RESET_COLOR'
+
+PS2='\
+$PR_CYAN$PR_HBAR\
+$PR_BLUE$PR_HBAR\
+($PR_LIGHT_GREEN%_$PR_BLUE)$PR_HBAR\
+$PR_CYAN$PR_HBAR$PR_RESET_COLOR'
+
 function pwd_prompt_info {
     echo "%~"
 }
@@ -11,193 +105,107 @@ function title_prompt_info {
     echo "%(!.-=*[ROOT]*=- | .)%n@%m:%~ | %y"
 }
 
-function prompt_preloading {
-    # PROMPTS
-    PR_TEMPLATE="--()()--"
-    PR_FILLBAR=""
-    PR_PWD="$(pwd_prompt_info)"
+# Load all dynamic infomation
+function _prompt_load_dynamic_info {
+    PR_FILLBAR_DYNAMIC_FORMAT=""
+    PR_PWD_DYNAMIC="$(pwd_prompt_info)"
+    PR_USER_DYNAMIC="%(!.%SROOT%s.%n)"
+    PR_HOST_AT_DYNAMIC="@"
+    PR_HOST_DOMAIN_DYNAMIC="%m:%l"
+    PR_MOE_DYNAMIC="%(?.${PR_MOE:s/)/%)/}.${PR_SHRUG:s/)/%)/})"
+    PR_GIT_DYNAMIC="$(git_prompt_info)$(git_remote_status)"
     if [[ -n "$rvm_path" ]]; then
-        PR_RUBY=`rvm_prompt_info`
+        PR_RUBY_DYNAMIC=`rvm_prompt_info`
     elif [[ -n "$rbenv_path" ]]; then
-        PR_RUBY="(`current-rbenv-info`)"
+        PR_RUBY_DYNAMIC="(`current-rbenv-info`)"
     fi
-    PR_USER="%(!.%SROOT%s.%n)"
-    PR_HOST="$PR_GREY@$PR_GREEN%m:%l"
-
-    # PR_GIT="$(git_prompt_info)"
-    PR_GIT="$(git_prompt_info)$(git_remote_status)"
-    # PR_MOE="(～￣▽￣)～"
-    # Use `echo -n ▽ | hexdump` to get the escaped hex code
-    PR_MOE="($(echo -e "\xef\xbd\x9e")$(echo -e "\xef\xbf\xa3")$(echo -e "\xe2\x96\xbd")$(echo -e "\xef\xbf\xa3"))$(echo -e "\xef\xbd\x9e")"
-    PR_TIME="%D{%H:%M:%S %b %d}"
+    if [[ -n "$NVM_VERSION" ]]; then
+        PR_NVM="(`nvm_prompt_info`)"
+    fi
 }
 
-function prompt_calculation {
+# Calculate sizes and shrink info as needed
+function _prompt_layout_dynamic_info {
+
+    local zero='%([BSUbfksu]|([FK]|){*})'
+
     # Calc sizes
-    local TERMWIDTH=$(($COLUMNS-1))
-    local templatesize=${#${(%):-${PR_TEMPLATE}}}
-    local pwdsize=${#${(%):-${PR_PWD}}}
-    local rubysize=${#${(%):-${PR_RUBY}}}
-    local usersize=${#${(%):-${PR_USER}}}
-    local hostsize=${#${(%):-"@%m:%l"}}
+    local TERMWIDTH=$(( $COLUMNS - 1 ))
+    local templatesize=${#${(%)PR_TEMPLATE1//$~zero/}}
+    local pwdsize=${#${(S%%)PR_PWD_DYNAMIC//$~zero/}}
+    local rubysize=${#${(S%%)PR_RUBY_DYNAMIC//$~zero/}}
+    local usersize=${#${(S%%)PR_USER_DYNAMIC//$~zero/}}
+    local hostall="$PR_HOST_AT_DYNAMIC$PR_HOST_DOMAIN_DYNAMIC"
+    local hostsize=${#${(S%%)hostall//$~zero/}}
+    local gitsize=${#${(S%%)PR_GIT_DYNAMIC//$~zero/}}
+    local moesize=${#${(S%%)PR_MOE//$~zero/}}
+    local shrugsize=${#${(S%%)PR_SHRUG//$~zero/}}
+    # use the longest between PR_MOE and PR_SHRUG
+    local kaosize=$(( moesize > shrugsize ? moesize : shrugsize ))
 
-    local gitsize=${#${(%):-${PR_GIT}}}
-    local moesize=${#${(%):-${PR_MOE}}}
-    local timesize=${#${(%):-${PR_TIME}}}
-
-    # Full info => remove host => remove user => shrink pwd
-    if [[ "$templatesize + $pwdsize + $rubysize + $usersize + $hostsize" -lt $TERMWIDTH ]]; then
-        # Full info
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize + $hostsize)))..${PR_HBAR}.)}"
-    elif [[ "$templatesize + $pwdsize + $rubysize + $usersize" -lt $TERMWIDTH ]]; then
-        # Remove @host
-        PR_HOST=""
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize)))..${PR_HBAR}.)}"
-    elif [[ "$templatesize + $pwdsize + $rubysize" -lt $TERMWIDTH ]]; then
-        # remove user
-        PR_HOST=""
-        PR_USER=""
-        PR_FILLBAR="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize)))..${PR_HBAR}.)}"
-    else
-        # shrink pwd
-        PR_HOST=""
-        PR_USER=""
-        PR_PWD="%$(($TERMWIDTH - $templatesize - $rubysize))<...<%~%<<"
+    # First line
+    # Full info => remove host => remove user => remove versions => shrink pwd
+    if [[ "$templatesize + $pwdsize + $rubysize + $usersize + $hostsize" -gt $TERMWIDTH ]]; then
+        # remove @host
+        PR_HOST_AT_DYNAMIC=""
+        PR_HOST_DOMAIN_DYNAMIC=""
+        hostsize=0
     fi
+    if [[ "$templatesize + $pwdsize + $rubysize + $usersize" -gt $TERMWIDTH ]]; then
+        # remove user
+        PR_USER_DYNAMIC=""
+        usersize=0
+    fi
+    if [[ "$templatesize + $pwdsize + $rubysize" -gt $TERMWIDTH ]]; then
+        # remove versions
+        PR_RUBY_DYNAMIC=""
+        rubysize=0
+    fi
+    if [[ "$templatesize + $pwdsize" -gt $TERMWIDTH ]]; then
+        # shrink pwd
+        PR_PWD_DYNAMIC="%$(($TERMWIDTH - $templatesize - $rubysize))<...<%~%<<"
+        pwdsize=${#${(%):-${PR_PWD_DYNAMIC}}}
+    fi
+    PR_FILLBAR_DYNAMIC_FORMAT="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize + $hostsize)))..${PR_HBAR}.)}"
 
+    # Second line
+    local templatesize=${#${(%)PR_TEMPLATE2//$~zero/}}
     local gitmin=10
     local TERMWIDTH3=$(($TERMWIDTH / 3))
 
-    if [[ "$gitsize + $moesize" -lt $TERMWIDTH3 ]]; then
-    elif [[ "$gitmin + $moesize" -lt $TERMWIDTH3 ]]; then
-        PR_GIT="%$(($TERMWIDTH3 - $moesize))>...>$PR_GIT%<<"
-    elif [[ "$gitmin" -lt $TERMWIDTH3 ]]; then
-        PR_MOE=""
-        PR_GIT="%$(($TERMWIDTH3))>...>$PR_GIT%<<"
+    if [[ "$templatesize + $gitsize + $kaosize" -gt $TERMWIDTH3 ]]; then
+        # remove kaomoji
+        PR_MOE_DYNAMIC=""
+    fi
+    if [[ "$templatesize + $gitsize" -gt $TERMWIDTH3 ]]; then
+        if [[ "$templatesize + $gitmin" -gt $TERMWIDTH3 ]]; then
+            # remove git prompt
+            PR_GIT_DYNAMIC=""
+        else
+            # shrink git prompt
+            local restsize=$(($TERMWIDTH3 - $templatesize))
+            local gitsize=$(( $restsize > $gitmin ? $restsize : $gitmin ))
+            PR_GIT_DYNAMIC="%$gitsize>...>$PR_GIT_DYNAMIC%<<"
+        fi
     fi
 }
 
-function precmd {
-    # Config Git Prompt
-    ZSH_THEME_GIT_PROMPT_PREFIX="$PR_GREEN"
-    ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_NO_COLOUR"
-    ZSH_THEME_GIT_PROMPT_DIRTY=" %{$PR_RED%}x"
-    ZSH_THEME_GIT_PROMPT_CLEAN=""
-    ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$PR_YELLOW%}↓"
-    ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$PR_YELLOW%}↑"
-    ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
+autoload -U add-zsh-hook
 
-    benchmark prompt_preloading
-    benchmark prompt_calculation
+function _prompt_precmd {
+    benchmark _prompt_load_dynamic_info
+    benchmark _prompt_layout_dynamic_info
 }
+# precmd is triggered right before the prompt is about to be shown
+add-zsh-hook precmd _prompt_precmd
 
-setopt extended_glob
-preexec () {
-    if [[ "$TERM" == "screen" ]]; then
-          local CMD=${1[(wr)^(*=*|sudo|-*)]}
-          echo -n "\ek$CMD\e\\"
-    fi
-}
+if [[ "$TERM" == "screen" ]]; then
+    function _screen_title {
+        local CMD=${1[(wr)^(*=*|sudo|-*)]}
+        echo -n "\ek$CMD\e\\"
+    }
 
-
-setprompt () {
-    ###
-    # Need this so the prompt will work.
-
-    setopt prompt_subst
-
-
-    ###
-    # See if we can use colors.
-
-    autoload colors zsh/terminfo
-    if [[ "$terminfo[colors]" -ge 8 ]]; then
-        colors
-    fi
-    for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE GREY; do
-        eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-        eval PR_LIGHT_$color='%{$terminfo[sgr0]$fg[${(L)color}]%}'
-        (( count = $count + 1 ))
-    done
-    PR_NO_COLOUR="%{$terminfo[sgr0]%}"
-
-    ###
-    # See if we can use extended characters to look nicer.
-
-    typeset -A altchar
-    set -A altchar ${(s..)terminfo[acsc]}
-    PR_SET_CHARSET="%{$terminfo[enacs]%}"
-    PR_SHIFT_IN="%{$terminfo[smacs]%}"
-    PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
-    PR_HBAR=${altchar[q]:--}
-    PR_ULCORNER=${altchar[l]:--}
-    PR_LLCORNER=${altchar[m]:--}
-    PR_LRCORNER=${altchar[j]:--}
-    PR_URCORNER=${altchar[k]:--}
-
-
-    ###
-    # Decide if we need to set titlebar text.
-
-    case $TERM in
-        xterm*)
-            PR_TITLEBAR=$'%{\e]0;$(title_prompt_info)\a%}'
-            ;;
-        screen)
-            PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~  | %y\e\\%}'
-            ;;
-        *)
-            PR_TITLEBAR=''
-            ;;
-    esac
-
-
-    ###
-    # Decide whether to set a screen title
-    if [[ "$TERM" == "screen" ]]; then
-        PR_STITLE=$'%{\ekzsh\e\\%}'
-    else
-        PR_STITLE=''
-    fi
-
-
-    ###
-    # Finally, the prompt.
-
-    UL_corner="$PR_SHIFT_IN$PR_ULCORNER$PR_HBAR$PR_SHIFT_OUT"
-    LL_corner="$PR_SHIFT_IN$PR_LLCORNER$PR_HBAR$PR_SHIFT_OUT"
-    UR_corner="$PR_SHIFT_IN$PR_HBAR$PR_URCORNER$PR_SHIFT_OUT"
-    LR_corner="$PR_SHIFT_IN$PR_HBAR$PR_LRCORNER$PR_SHIFT_OUT"
-
-    PROMPT='\
-$PR_STITLE${(e)PR_TITLEBAR}\
-$PR_SET_CHARSET\
-$PR_BLUE$UL_corner\
-($PR_YELLOW$PR_PWD$PR_BLUE)\
-$PR_LIGHT_YELLOW$PR_RUBY\
-$PR_BLUE$PR_SHIFT_IN${(e)PR_FILLBAR}$PR_SHIFT_OUT\
-($PR_LIGHT_BLUE$PR_USER$PR_HOST$PR_BLUE)\
-$UR_corner\
-
-$LL_corner\
-($PR_GIT$PR_BLUE)\
-$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_MOE>\
-$PR_NO_COLOUR'
-
-    # display exitcode on the right when >0
-    return_code="%(?..%{$fg[red]%}%?%{$reset_color%})"
-    RPROMPT='\
-$PR_SHIFT_IN$return_code$PR_SHIFT_OUT\
-$PR_BLUE($PR_YELLOW$PR_TIME$PR_BLUE)\
-$LR_corner\
-$PR_NO_COLOUR'
-
-    PS2='\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_BLUE$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
-$PR_LIGHT_GREEN%_$PR_BLUE)$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
-$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR'
-}
-
-setprompt
+    setopt extended_glob
+    # preexec() is triggered right before an command is about to be executed
+    add-zsh-hook preexec _screen_title
+fi

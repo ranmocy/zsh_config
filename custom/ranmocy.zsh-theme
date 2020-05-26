@@ -1,7 +1,7 @@
 # Two lines promot, with RVM and Git support
 # Better with my iTerm color scheme
 #
-# Mar 2015, Ranmocy
+# Mar 2015 - May 2020, Ranmocy
 
 # See if we can use colors.
 autoload colors zsh/terminfo
@@ -62,7 +62,7 @@ PR_USER_DYNAMIC=""
 PR_HOST_AT_DYNAMIC=""
 PR_HOST_DOMAIN_DYNAMIC=""
 PR_GIT_DYNAMIC=""
-PR_RUBY_DYNAMIC=""
+PR_VERSIONS_DYNAMIC=""
 PR_MOE_DYNAMIC=""
 
 # Need this to expand parameters in the prompt template
@@ -73,7 +73,7 @@ PROMPT='\
 $PR_STITLE${(e)PR_TITLEBAR_FORMAT}\
 $PR_BLUE$PR_ULCORNER$PR_HBAR\
 ($PR_YELLOW$PR_PWD_DYNAMIC$PR_BLUE)\
-$PR_LIGHT_YELLOW$PR_RUBY_DYNAMIC\
+$PR_LIGHT_YELLOW$PR_VERSIONS_DYNAMIC\
 $PR_BLUE${(e)PR_FILLBAR_DYNAMIC_FORMAT}\
 ($PR_LIGHT_BLUE$PR_USER_DYNAMIC$PR_GREY$PR_HOST_AT_DYNAMIC$PR_GREEN$PR_HOST_DOMAIN_DYNAMIC$PR_BLUE)\
 $PR_HBAR$PR_URCORNER\
@@ -114,13 +114,14 @@ function _prompt_load_dynamic_info {
     PR_HOST_DOMAIN_DYNAMIC="%m:%l"
     PR_MOE_DYNAMIC="%(?.${PR_MOE:s/)/%)/}.${PR_SHRUG:s/)/%)/})"
     PR_GIT_DYNAMIC="$(git_prompt_info)$(git_remote_status)"
+    PR_VERSIONS_DYNAMIC=""
     if [[ -n "$rvm_path" ]]; then
-        PR_RUBY_DYNAMIC=`rvm_prompt_info`
+        PR_VERSIONS_DYNAMIC="${PR_VERSIONS_DYNAMIC}r`rvm_prompt_info`"
     elif [[ -n "$rbenv_path" ]]; then
-        PR_RUBY_DYNAMIC="(`current-rbenv-info`)"
+        PR_VERSIONS_DYNAMIC="${PR_VERSIONS_DYNAMIC}rb(`current-rbenv-info`)"
     fi
-    if [[ -n "$NVM_VERSION" ]]; then
-        PR_NVM="(`nvm_prompt_info`)"
+    if [[ -n "$NVM_LOADED" ]]; then
+        PR_VERSIONS_DYNAMIC="${PR_VERSIONS_DYNAMIC}n(`nvm_prompt_info`)"
     fi
 }
 
@@ -133,7 +134,7 @@ function _prompt_layout_dynamic_info {
     local TERMWIDTH=$(( $COLUMNS - 1 ))
     local templatesize=${#${(%)PR_TEMPLATE1//$~zero/}}
     local pwdsize=${#${(S%%)PR_PWD_DYNAMIC//$~zero/}}
-    local rubysize=${#${(S%%)PR_RUBY_DYNAMIC//$~zero/}}
+    local versionsize=${#${(S%%)PR_VERSIONS_DYNAMIC//$~zero/}}
     local usersize=${#${(S%%)PR_USER_DYNAMIC//$~zero/}}
     local hostall="$PR_HOST_AT_DYNAMIC$PR_HOST_DOMAIN_DYNAMIC"
     local hostsize=${#${(S%%)hostall//$~zero/}}
@@ -145,28 +146,28 @@ function _prompt_layout_dynamic_info {
 
     # First line
     # Full info => remove host => remove user => remove versions => shrink pwd
-    if [[ "$templatesize + $pwdsize + $rubysize + $usersize + $hostsize" -gt $TERMWIDTH ]]; then
+    if [[ "$templatesize + $pwdsize + $versionsize + $usersize + $hostsize" -gt $TERMWIDTH ]]; then
         # remove @host
         PR_HOST_AT_DYNAMIC=""
         PR_HOST_DOMAIN_DYNAMIC=""
         hostsize=0
     fi
-    if [[ "$templatesize + $pwdsize + $rubysize + $usersize" -gt $TERMWIDTH ]]; then
+    if [[ "$templatesize + $pwdsize + $versionsize + $usersize" -gt $TERMWIDTH ]]; then
         # remove user
         PR_USER_DYNAMIC=""
         usersize=0
     fi
-    if [[ "$templatesize + $pwdsize + $rubysize" -gt $TERMWIDTH ]]; then
+    if [[ "$templatesize + $pwdsize + $versionsize" -gt $TERMWIDTH ]]; then
         # remove versions
-        PR_RUBY_DYNAMIC=""
-        rubysize=0
+        PR_VERSIONS_DYNAMIC=""
+        versionsize=0
     fi
     if [[ "$templatesize + $pwdsize" -gt $TERMWIDTH ]]; then
         # shrink pwd
-        PR_PWD_DYNAMIC="%$(($TERMWIDTH - $templatesize - $rubysize))<...<%~%<<"
+        PR_PWD_DYNAMIC="%$(($TERMWIDTH - $templatesize - $versionsize))<...<%~%<<"
         pwdsize=${#${(%):-${PR_PWD_DYNAMIC}}}
     fi
-    PR_FILLBAR_DYNAMIC_FORMAT="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $rubysize + $usersize + $hostsize)))..${PR_HBAR}.)}"
+    PR_FILLBAR_DYNAMIC_FORMAT="\${(l.(($TERMWIDTH - ($templatesize + $pwdsize + $versionsize + $usersize + $hostsize)))..${PR_HBAR}.)}"
 
     # Second line
     local templatesize=${#${(%)PR_TEMPLATE2//$~zero/}}

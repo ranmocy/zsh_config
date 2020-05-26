@@ -4,11 +4,12 @@
 # * plugin base
 
 nvm() {
-    export NVM_DIR="$HOME/.nvm"
-    if [ -s "$NVM_DIR/nvm.sh" ]; then
+    if [ -s "$HOME/.nvm/nvm.sh" ]; then
         unset -f nvm
+        export NVM_DIR="$HOME/.nvm"
         source "$NVM_DIR/nvm.sh"
         source "$NVM_DIR/bash_completion"
+        export NVM_LOADED="true"
         nvm $@ # call real function
     else
         confirm "NVM is not installed, do you want to install?" && \
@@ -40,6 +41,9 @@ load-nvmrc() {
     if [ -n "$(nvm_find_nvmrc)" ]; then
       # Found nvmrc, load NVM and use this version
       nvm use --silent
+    elif [ -n "$NVM_LOADED" ]; then
+      # NVM is loaded, switch to default version
+      nvm use --silent default
     fi
   else
     # NVM is not installed

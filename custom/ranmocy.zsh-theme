@@ -40,7 +40,7 @@ ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$PR_YELLOW%}↕"
 # Decide if we need to set titlebar text.
 case $TERM in
     xterm*)
-        PR_TITLEBAR_FORMAT=$'%{\e]0;$(title_prompt_info)\a%}'
+        PR_TITLEBAR_FORMAT=$'%{\e]0;$PR_TITLE_DYNAMIC\a%}'
         PR_STITLE=''
         ;;
     screen)
@@ -54,9 +54,11 @@ case $TERM in
 esac
 
 # Dynamic parts placeholder
+# Note: These info may be overridden by corp usage
 PR_TEMPLATE1="${PR_ULCORNER}${PR_HBAR}()()${PR_HBAR}${PR_URCORNER}"
 PR_TEMPLATE2="${PR_LLCORNER}${PR_HBAR}()${PR_HBAR}>"
 PR_FILLBAR_DYNAMIC_FORMAT=""
+PR_TITLE_DYNAMIC=""
 PR_PWD_DYNAMIC=""
 PR_USER_DYNAMIC=""
 PR_HOST_AT_DYNAMIC=""
@@ -106,8 +108,10 @@ function title_prompt_info {
 }
 
 # Load all dynamic infomation
-function _prompt_load_dynamic_info {
+# Note: This method may be overridden by corp usage
+function prompt_load_dynamic_info {
     PR_FILLBAR_DYNAMIC_FORMAT=""
+    PR_TITLE_DYNAMIC=$(title_prompt_info)
     PR_PWD_DYNAMIC="$(pwd_prompt_info)"
     PR_USER_DYNAMIC="%(!.%SROOT%s.%n)"
     PR_HOST_AT_DYNAMIC="@"
@@ -126,7 +130,7 @@ function _prompt_load_dynamic_info {
 }
 
 # Calculate sizes and shrink info as needed
-function _prompt_layout_dynamic_info {
+function prompt_layout_dynamic_info {
 
     local zero='%([BSUbfksu]|([FK]|){*})'
 
@@ -194,8 +198,8 @@ function _prompt_layout_dynamic_info {
 autoload -U add-zsh-hook
 
 function _prompt_precmd {
-    benchmark _prompt_load_dynamic_info
-    benchmark _prompt_layout_dynamic_info
+    benchmark prompt_load_dynamic_info
+    benchmark prompt_layout_dynamic_info
 }
 # precmd is triggered right before the prompt is about to be shown
 add-zsh-hook precmd _prompt_precmd

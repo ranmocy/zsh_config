@@ -13,6 +13,7 @@ nvm() {
         nvm $@ # call real function
     else
         confirm "NVM is not installed, do you want to install?" && \
+        export NVM_DIR="$HOME/.nvm" && \
         mkdir -p "$NVM_DIR" && \
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
     fi

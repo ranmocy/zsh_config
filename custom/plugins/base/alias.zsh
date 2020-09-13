@@ -17,7 +17,7 @@ esac
 
 # Custom alias
 alias b='brew'
-alias bup="brew update && brew outdated && brew upgrade && brew cask outdated && brew cask upgrade && brew cleanup"
+alias bup="brew update && brew outdated && brew upgrade && brew cleanup"
 alias nup="(type npm &> /dev/null) && npm -g upgrade"
 alias up='configs_upgrade && (bup; nup;)'
 alias g='git'

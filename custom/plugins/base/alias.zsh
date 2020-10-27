@@ -41,6 +41,8 @@ alias tree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's
 alias record="ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg"
 alias sha1="shasum -a 1"
 alias sha256="shasum -a 256"
+alias jarsignature="jarsigner -verify -verbose -certs"
+alias apksignature="~/Android/Sdk/build-tools/30.0.1/apksigner verify --print-certs"
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
 hash -d code="$HOME/Codespace/"

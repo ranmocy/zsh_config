@@ -59,6 +59,15 @@ function listkill() {
     (listtask $1 | awk '{print $2}' | xargs kill -s $sig) && listtask $1
 }
 
+function listport() {
+    if [ -z $1 ]; then
+        lsof -i -P -n | grep LISTEN
+    else
+        lsof -i:$1 -P -n | grep LISTEN
+    fi
+}
+alias lsport='listport'
+
 function bak() {
     if [[ -z $1 ]]; then
         echo "USAGE: bak FILENAME"

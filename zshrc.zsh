@@ -73,7 +73,7 @@ _setup_path() {
     if [ -x /usr/libexec/path_helper ]; then
         eval `/usr/libexec/path_helper -s`
     fi
-    export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH
+    export PATH=$HOME/bin_corp:$HOME/bin:$HOME/Library/Android/sdk/platform-tools:/usr/local/sbin:$PATH
 }
 benchmark _setup_path
 

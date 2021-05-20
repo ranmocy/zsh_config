@@ -107,6 +107,11 @@ function title_prompt_info {
     echo "%(!.-=*[ROOT]*=- | .)%n@%m:%~ | %y"
 }
 
+# Note: This method may be overridden by corp usage
+function prompt_git_dynamic_info {
+    echo "$(git_prompt_info)$(git_remote_status)"
+}
+
 # Load all dynamic infomation
 # Note: This method may be overridden by corp usage
 function prompt_load_dynamic_info {
@@ -117,7 +122,7 @@ function prompt_load_dynamic_info {
     PR_HOST_AT_DYNAMIC="@"
     PR_HOST_DOMAIN_DYNAMIC="%m:%l"
     PR_MOE_DYNAMIC="%(?.${PR_MOE:s/)/%)/}.${PR_SHRUG:s/)/%)/})"
-    PR_GIT_DYNAMIC="$(git_prompt_info)$(git_remote_status)"
+    PR_GIT_DYNAMIC="$(prompt_git_dynamic_info)"
     PR_VERSIONS_DYNAMIC=""
     if [[ -n "$rvm_path" ]]; then
         PR_VERSIONS_DYNAMIC="${PR_VERSIONS_DYNAMIC}r`rvm_prompt_info`"

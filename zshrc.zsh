@@ -63,7 +63,7 @@ ZSH_CUSTOM=$HOME/.zshrc.d/custom
 # Custom plugins may be added to $HOME/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(base notify cmdnotify nvm)
+plugins=()
 # plugins+=(rvm)
 
 # User configuration
@@ -95,6 +95,11 @@ source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 if [ -f $HOME/bin_corp/sensitive.zsh ]; then
     source $HOME/bin_corp/sensitive.zsh
 fi
+
+source $HOME/.zshrc.d/base.plugin.zsh
+source $HOME/.zshrc.d/notify.plugin.zsh
+source $HOME/.zshrc.d/cmdnotify.plugin.zsh
+source $HOME/.zshrc.d/nvm.plugin.zsh
 
 if [[ $BENCHMARK == true ]]; then
     echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"

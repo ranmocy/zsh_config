@@ -10,7 +10,13 @@ alias ll="ls -alh"
 case "$OSTYPE" in
   darwin*)  ;;
   cygwin*)  alias open='cygstart' ;;
-  linux*)   alias open='xdg-open' ;;
+  linux*)
+    if [[ -n "$IS_WSL" || -n "$WSL_DISTRO_NAME" ]]; then
+      alias open='explorer.exe'
+    else
+      alias open='xdg-open'
+    fi
+  ;;
   msys*)    alias open='start ""' ;;
   *)        echo "Platform $OSTYPE not supported" ;;
 esac

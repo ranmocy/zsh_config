@@ -5,6 +5,9 @@ else
     export EDITOR="s -w"
 fi
 
+# Android
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk/
+
 # Color utils
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad

@@ -84,13 +84,13 @@ if [ ! -f $HOME/.zshrc.d/custom/themes/powerlevel10k/powerlevel10k.zsh-theme ]; 
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zshrc.d/custom/themes/powerlevel10k
 fi
 if [ ! -f $ZSH/oh-my-zsh.sh ]; then
-    git clone --depth=1 'git://github.com/robbyrussell/oh-my-zsh.git' $ZSH
+    git clone --depth=1 'https://github.com/robbyrussell/oh-my-zsh.git' $ZSH
 fi
 if [ ! -f $HOME/.zshrc.d/z/z.sh ]; then
-    git clone --depth=1 'git://github.com/rupa/z.git' $HOME/.zshrc.d/z
+    git clone --depth=1 'https://github.com/rupa/z.git' $HOME/.zshrc.d/z
 fi
 if [ ! -f $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    git clone --depth=1 'git://github.com/zsh-users/zsh-syntax-highlighting.git' $HOME/.zshrc.d/zsh-syntax-highlighting
+    git clone --depth=1 'https://github.com/zsh-users/zsh-syntax-highlighting.git' $HOME/.zshrc.d/zsh-syntax-highlighting
 fi
 
 source $ZSH/oh-my-zsh.sh

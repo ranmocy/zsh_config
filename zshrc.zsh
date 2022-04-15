@@ -78,7 +78,7 @@ _setup_path() {
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
     export PATH=$HOME/flutter/bin:$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
-    export PATH=$HOME/bin_corp:$HOME/bin:$PATH
+    export PATH=$HOME/bin:$PATH
 }
 benchmark _setup_path
 
@@ -99,8 +99,8 @@ fi
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zshrc.d/z/z.sh
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-if [ -f $HOME/bin_corp/sensitive.zsh ]; then
-    source $HOME/bin_corp/sensitive.zsh
+if [ -f $HOME/.zshrc.d/sensitive.zsh ]; then
+    source $HOME/.zshrc.d/sensitive.zsh
 fi
 
 source $HOME/.zshrc.d/base.plugin.zsh

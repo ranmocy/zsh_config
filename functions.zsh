@@ -102,10 +102,10 @@ function httpserver() {
     # python -c "import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(('$host', $port), shs.SimpleHTTPRequestHandler).serve_forever()" 2>/dev/null &
 
     # Python3 only
-    # python3 -m http.server $port --bind $host
+    python3 -m http.server $port --bind $host
 
     # 2 or 3
-    python -m $(python -c 'import sys; print("http.server" if sys.version_info[:2] > (2,7) else "SimpleHTTPServer")') $port --bind $host
+    # python -m $(python -c 'import sys; print("http.server" if sys.version_info[:2] > (2,7) else "SimpleHTTPServer")') $port --bind $host
 }
 
 function replaceall() {

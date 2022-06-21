@@ -77,8 +77,11 @@ _setup_path() {
     if [ -x /opt/homebrew/bin/brew ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
-    export PATH=$HOME/flutter/bin:$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
-    export PATH=$HOME/bin:$PATH
+    if [ -f $HOME/.cargo/env ]; then
+        source "$HOME/.cargo/env"
+    fi
+    export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
+    export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
 }
 benchmark _setup_path
 

@@ -51,6 +51,6 @@ alias jarsignature="jarsigner -verify -verbose -certs"
 alias apksignature="~/Android/Sdk/build-tools/30.0.1/apksigner verify --print-certs"
 
 # Path Alias //进入相应的路径时只要 cd ~xxx
-hash -d code="$HOME/Codespace/"
-hash -d hosted="$HOME/Codespace/Hosted/"
-hash -d brain="$HOME/Codespace/Brain/"
+hash -d code="$HOME/Code/"
+hash -d pnm="$HOME/Code/pnm/"
+hash -d meson="$HOME/Code/mesonfi/"

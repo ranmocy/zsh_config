@@ -80,8 +80,10 @@ _setup_path() {
     if [ -f $HOME/.cargo/env ]; then
         source "$HOME/.cargo/env"
     fi
-    export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
-    export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
+    # export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
+    export PATH=$HOME/.foundry/bin:$PATH
+    export PATH=$HOME/.yarn/bin:$PATH
+    export PATH=$HOME/bin:$PATH
 }
 benchmark _setup_path
 
@@ -115,3 +117,4 @@ source $HOME/.zshrc.d/p10k.zsh
 if [[ $BENCHMARK == true ]]; then
     echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
 fi
+

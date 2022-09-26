@@ -8,6 +8,9 @@ fi
 # Android
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk/
 
+# Rust
+export RUST_LOG=debug
+
 # Color utils
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad

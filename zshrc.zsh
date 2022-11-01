@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # BENCHMARK=true
 
 if [[ $BENCHMARK == true ]]; then
@@ -118,3 +120,5 @@ if [[ $BENCHMARK == true ]]; then
     echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
 fi
 
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

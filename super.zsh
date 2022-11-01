@@ -9,7 +9,7 @@ fi
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk/
 
 # Rust
-export RUST_LOG=debug
+export RUST_LOG=info
 
 # Color utils
 export CLICOLOR=1

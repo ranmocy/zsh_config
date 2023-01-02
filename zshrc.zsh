@@ -4,8 +4,8 @@
 
 if [[ $BENCHMARK == true ]]; then
     _get_current_milliseconds(){
-        # /usr/local/bin/gdate +%s.%N
-        date +%s%N
+        # date +%s%N
+        /opt/homebrew/bin/gdate +%s%N
     }
 
     BENCHMARK_TOTAL_BEGIN_TIME=`_get_current_milliseconds`
@@ -83,6 +83,7 @@ _setup_path() {
         source "$HOME/.cargo/env"
     fi
     # export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
+    export PATH=$HOME/.pnm/bin:$PATH
     export PATH=$HOME/.foundry/bin:$PATH
     export PATH=$HOME/.yarn/bin:$PATH
     export PATH=$HOME/bin:$PATH
@@ -119,6 +120,9 @@ source $HOME/.zshrc.d/p10k.zsh
 if [[ $BENCHMARK == true ]]; then
     echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
 fi
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=$HOME/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

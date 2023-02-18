@@ -112,17 +112,17 @@ if [ -f $HOME/.zshrc.d/sensitive.zsh ]; then
 fi
 
 source $HOME/.zshrc.d/base.plugin.zsh
-source $HOME/.zshrc.d/notify.plugin.zsh
-source $HOME/.zshrc.d/cmdnotify.plugin.zsh
+# source $HOME/.zshrc.d/notify.plugin.zsh
+# source $HOME/.zshrc.d/cmdnotify.plugin.zsh
 source $HOME/.zshrc.d/nvm.plugin.zsh
-source $HOME/.zshrc.d/p10k.zsh
-
-if [[ $BENCHMARK == true ]]; then
-    echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
-fi
+# source $HOME/.zshrc.d/p10k.zsh
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=$HOME/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
 # Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+if [[ $BENCHMARK == true ]]; then
+    echo "Total: `_diff_current_milliseconds $BENCHMARK_TOTAL_BEGIN_TIME`ms"
+fi

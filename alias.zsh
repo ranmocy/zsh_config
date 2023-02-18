@@ -1,7 +1,7 @@
 # System Alias
-alias l="ls -lh"
+alias l="ls -lah"
 alias la="ls -ah"
-alias ll="ls -alh"
+alias ll="ls -lah"
 #alias cp='cp -i'
 #alias mv='mv -i'
 #alias rm='rm -i'

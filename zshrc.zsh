@@ -81,6 +81,7 @@ _setup_path() {
         source "$HOME/.cargo/env"
     fi
     # export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
+    export PATH=/Applications/WebStorm.app/Contents/MacOS:$PATH
     export PATH=$HOME/.pnm/bin:$PATH
     export PATH=$HOME/.foundry/bin:$PATH
     export PATH=$HOME/.yarn/bin:$PATH

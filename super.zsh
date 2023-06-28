@@ -4,6 +4,7 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
     export EDITOR="s"
 fi
+export REACT_EDITOR='webstorm'
 
 # Android
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk/

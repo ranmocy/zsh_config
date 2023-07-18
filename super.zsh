@@ -2,7 +2,7 @@
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
 else
-    export EDITOR="s"
+    export EDITOR="zed"
 fi
 export REACT_EDITOR='webstorm'
 

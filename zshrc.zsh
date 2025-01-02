@@ -80,12 +80,16 @@ _setup_path() {
     if [ -f $HOME/.cargo/env ]; then
         source "$HOME/.cargo/env"
     fi
-    # export PATH=$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools:$PATH
-    export PATH=/Applications/WebStorm.app/Contents/MacOS:$PATH
-    export PATH=$HOME/.pnm/bin:$PATH
-    export PATH=$HOME/.foundry/bin:$PATH
-    export PATH=$HOME/.yarn/bin:$PATH
-    export PATH=$HOME/bin:$PATH
+
+    export PATH=$HOME/bin:$HOME/.oh-my-configs/bin:$PATH
+
+    export PATH=$PATH:$HOME/.local/bin
+    export PATH=$PATH:$HOME/.cargo/bin
+    export PATH=$PATH:$HOME/.yarn/bin
+    export PATH=$PATH:/Applications/WebStorm.app/Contents/MacOS
+    export PATH=$PATH:'/Applications/Visual Studio Code.app/Contents/Resources/app/bin'
+    export PATH=$PATH:$HOME/.cache/lm-studio/bin
+    # export PATH=$PATH:$HOME/Android/Sdk/platform-tools:$HOME/Library/Android/sdk/platform-tools
 }
 benchmark _setup_path
 

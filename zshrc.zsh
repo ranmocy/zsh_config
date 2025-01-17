@@ -86,6 +86,7 @@ _setup_path() {
     export PATH=$PATH:$HOME/.local/bin
     export PATH=$PATH:$HOME/.cargo/bin
     export PATH=$PATH:$HOME/.yarn/bin
+    export PATH=$PATH:$HOME/Library/Python/3.9/bin
     export PATH=$PATH:/Applications/WebStorm.app/Contents/MacOS
     export PATH=$PATH:'/Applications/Visual Studio Code.app/Contents/Resources/app/bin'
     export PATH=$PATH:$HOME/.cache/lm-studio/bin

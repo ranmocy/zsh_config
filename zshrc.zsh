@@ -111,8 +111,8 @@ fi
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zshrc.d/z/z.sh
 source $HOME/.zshrc.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-if [ -f $HOME/.zshrc.d/sensitive.zsh ]; then
-    source $HOME/.zshrc.d/sensitive.zsh
+if [ -f $HOME/corp/bin/zshrc.zsh ]; then
+    source $HOME/corp/bin/zshrc.zsh
 fi
 
 source $HOME/.zshrc.d/base.plugin.zsh
